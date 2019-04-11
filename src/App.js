@@ -1,28 +1,95 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import WorldMap from "./components/WorldMap/WorldMap";
+import BarChart from "./components/BarChart/BarChart";
+import StreamGraph from "./components/StreamGraph/StreamGraph";
+import Brush from "./components/Brush/Brush";
+import StatLine from "./components/StatLine/StatLine";
+import worlddata from "./data/world";
+import { range } from "d3-array";
+import { scaleThreshold } from "d3-scale";
+import { geoCentroid } from "d3-geo";
+import "./App.css";
 
-class App extends Component {
+const appdata = worlddata.features.filter(d => geoCentroid(d)[0] < -20);
+
+appdata.forEach((d, i) => {
+  const offset = Math.random();
+  d.launchday = i;
+  d.data = range(30).map((p, q) => (q < i ? 0 : Math.random() * 2 + offset));
+});
+
+const colorScale = scaleThreshold()
+  .domain([5, 10, 20, 30])
+  .range(["#ffffff", "#ff6666", "#e60000", "#990000"]);
+
+export default class App extends Component {
+  state = {
+    screenWidth: 1000,
+    screenHeight: 500,
+    hover: "none",
+    brushExtent: [0, 40]
+  };
+
+  componentDidMount() {
+    window.addEventListener("resize", this.onResize, false);
+    this.onResize();
+  }
+
+  onResize = () => {
+    this.setState({
+      screenWidth: window.innerWidth,
+      screenHeight: window.innerHeight - 120
+    });
+  };
+
+  onHover = d => {
+    this.setState({ hover: d.id });
+  };
+
+  onBrush = d => {
+    this.setState({ brushExtent: d });
+  };
+
   render() {
+    const filteredAppdata = appdata.filter(
+      (d, i) =>
+        d.launchday >= this.state.brushExtent[0] &&
+        d.launchday <= this.state.brushExtent[1]
+    );
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <div className="App-header">
+          <h2>d3ia dashboard</h2>
+        </div>
+        <div>
+          <StatLine allData={appdata} filteredData={filteredAppdata} />
+          <StreamGraph
+            hoverElement={this.state.hover}
+            onHover={this.onHover}
+            colorScale={colorScale}
+            data={filteredAppdata}
+            size={[this.state.screenWidth, this.state.screenHeight / 2]}
+          />
+          <Brush
+            changeBrush={this.onBrush}
+            size={[this.state.screenWidth, 50]}
+          />
+          <WorldMap
+            hoverElement={this.state.hover}
+            onHover={this.onHover}
+            colorScale={colorScale}
+            data={filteredAppdata}
+            size={[this.state.screenWidth / 2, this.state.screenHeight / 2]}
+          />
+          <BarChart
+            hoverElement={this.state.hover}
+            onHover={this.onHover}
+            colorScale={colorScale}
+            data={filteredAppdata}
+            size={[this.state.screenWidth / 2, this.state.screenHeight / 2]}
+          />
+        </div>
       </div>
     );
   }
 }
-
-export default App;
