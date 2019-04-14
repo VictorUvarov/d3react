@@ -4,13 +4,14 @@ import BarChart from "./components/BarChart/BarChart";
 import StreamGraph from "./components/StreamGraph/StreamGraph";
 import Brush from "./components/Brush/Brush";
 import StatLine from "./components/StatLine/StatLine";
-import worlddata from "./data/world";
+import worldData from "./data/world";
+import olympicData from "./data/olympics.csv";
 import { range } from "d3-array";
 import { scaleThreshold } from "d3-scale";
-import { geoCentroid } from "d3-geo";
+import { csv } from "d3-request";
 import "./App.css";
 
-const appdata = worlddata.features;
+const appdata = worldData.features;
 
 appdata.forEach((d, i) => {
   const offset = Math.random();
@@ -20,7 +21,7 @@ appdata.forEach((d, i) => {
 
 const colorScale = scaleThreshold()
   .domain([5, 10, 20, 30])
-  .range(["#ffe6e6", "#ff6666", "#e60000", "#990000"]);
+  .range(["#e6f0ff", "#80b3ff", "#1a75ff", "#003d99"]);
 
 export default class App extends Component {
   state = {
@@ -47,8 +48,8 @@ export default class App extends Component {
   };
 
   onHoverOut = () => {
-    this.setState({ hover: -1});
-  }
+    this.setState({ hover: -1 });
+  };
 
   onBrush = d => {
     this.setState({ brushExtent: d });
@@ -60,11 +61,12 @@ export default class App extends Component {
         d.launchday >= this.state.brushExtent[0] &&
         d.launchday <= this.state.brushExtent[1]
     );
+    csv(olympicData, function(error, data) {
+      if (error) throw error;
+      console.log(data);
+    });
     return (
       <div className="App">
-        <div className="App-header">
-          <h2>d3ia dashboard</h2>
-        </div>
         <div>
           <StatLine allData={appdata} filteredData={filteredAppdata} />
           <StreamGraph
@@ -73,7 +75,7 @@ export default class App extends Component {
             onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth, this.state.screenHeight / 2]}
+            size={[this.state.screenWidth, this.state.screenHeight / 3]}
           />
           <Brush
             changeBrush={this.onBrush}
@@ -85,15 +87,14 @@ export default class App extends Component {
             onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth, this.state.screenHeight / 2]}
+            size={[this.state.screenWidth, this.state.screenHeight / 3]}
           />
           <BarChart
             hoverElement={this.state.hover}
             onHover={this.onHover}
-            onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth, this.state.screenHeight / 2]}
+            size={[this.state.screenWidth, this.state.screenHeight / 3]}
           />
         </div>
       </div>
