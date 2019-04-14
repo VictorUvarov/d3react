@@ -75,7 +75,7 @@ export default class Brush extends Component {
       <svg
         ref={node => (this.node = node)}
         width={this.props.size[0]}
-        height={50}
+        height={this.props.size[1]}
       />
     );
   }

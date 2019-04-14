@@ -14,7 +14,7 @@ export default class WorldMap extends Component {
         onMouseEnter={() => {
           this.props.onHover(d);
         }}
-        onMouseOut = {() => {
+        onMouseOut={() => {
           this.props.onHoverOut();
         }}
         style={{

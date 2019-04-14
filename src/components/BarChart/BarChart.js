@@ -19,8 +19,8 @@ export default class BarChart extends Component {
     const barWidth = this.props.size[0] / this.props.data.length;
 
     const legend = legendColor()
-      .scale(this.props.colorScale)
-      .labels(["Wave 1", "Wave 2", "Wave 3", "Wave 4"]);
+      .scale(this.props.colorScale);
+      // .labels(["Wave 1", "Wave 2", "Wave 3", "Wave 4"]);
 
     select(node)
       .selectAll("g.legend")
@@ -45,7 +45,7 @@ export default class BarChart extends Component {
       .append("rect")
       .attr("class", "bar")
       .on("mouseover", this.props.onHover)
-      .on("mouseout",this.props.onHoverOut);
+      .on("mouseout", this.props.onHoverOut);
 
     select(node)
       .selectAll("rect.bar")
