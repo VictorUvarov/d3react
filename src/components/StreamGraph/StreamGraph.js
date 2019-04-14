@@ -43,6 +43,9 @@ export default class StreamGraph extends Component {
         onMouseEnter={() => {
           this.props.onHover(this.props.data[i]);
         }}
+        onMouseOut = {() => {
+          this.props.onHoverOut();
+        }}
         style={{
           fill:
             this.props.hoverElement === this.props.data[i]["id"]

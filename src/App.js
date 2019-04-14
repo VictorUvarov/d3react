@@ -10,7 +10,7 @@ import { scaleThreshold } from "d3-scale";
 import { geoCentroid } from "d3-geo";
 import "./App.css";
 
-const appdata = worlddata.features.filter(d => geoCentroid(d)[0] < -20);
+const appdata = worlddata.features;
 
 appdata.forEach((d, i) => {
   const offset = Math.random();
@@ -20,12 +20,12 @@ appdata.forEach((d, i) => {
 
 const colorScale = scaleThreshold()
   .domain([5, 10, 20, 30])
-  .range(["#ffffff", "#ff6666", "#e60000", "#990000"]);
+  .range(["#ffe6e6", "#ff6666", "#e60000", "#990000"]);
 
 export default class App extends Component {
   state = {
-    screenWidth: 1000,
-    screenHeight: 500,
+    screenWidth: 1920,
+    screenHeight: 1080,
     hover: "none",
     brushExtent: [0, 40]
   };
@@ -45,6 +45,10 @@ export default class App extends Component {
   onHover = d => {
     this.setState({ hover: d.id });
   };
+
+  onHoverOut = () => {
+    this.setState({ hover: -1});
+  }
 
   onBrush = d => {
     this.setState({ brushExtent: d });
@@ -66,6 +70,7 @@ export default class App extends Component {
           <StreamGraph
             hoverElement={this.state.hover}
             onHover={this.onHover}
+            onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
             size={[this.state.screenWidth, this.state.screenHeight / 2]}
@@ -77,16 +82,18 @@ export default class App extends Component {
           <WorldMap
             hoverElement={this.state.hover}
             onHover={this.onHover}
+            onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth / 2, this.state.screenHeight / 2]}
+            size={[this.state.screenWidth, this.state.screenHeight / 2]}
           />
           <BarChart
             hoverElement={this.state.hover}
             onHover={this.onHover}
+            onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth / 2, this.state.screenHeight / 2]}
+            size={[this.state.screenWidth, this.state.screenHeight / 2]}
           />
         </div>
       </div>

@@ -44,7 +44,8 @@ export default class BarChart extends Component {
       .enter()
       .append("rect")
       .attr("class", "bar")
-      .on("mouseover", this.props.onHover);
+      .on("mouseover", this.props.onHover)
+      .on("mouseout",this.props.onHoverOut);
 
     select(node)
       .selectAll("rect.bar")
