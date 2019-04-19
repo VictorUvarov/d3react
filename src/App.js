@@ -5,14 +5,14 @@ import StreamGraph from "./components/StreamGraph/StreamGraph";
 import Brush from "./components/Brush/Brush";
 import StatLine from "./components/StatLine/StatLine";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
-import LandingPage from "./components/LandingPage/LandingPage";
+import Page from "./components/Page/Page";
+import QuestionPage from "./components/QuestionPage/QuestionPage";
+import VisualizationPage from "./components/VisualizationPage/VisualizationPage";
 import worldData from "./data/world";
 import olympicData from "./data/olympics.csv";
 import { range } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { csv } from "d3-request";
-import QuestionPage from "./components/QuestionPage/QuestionPage";
-import VisualizationPage from "./components/VisualizationPage/VisualizationPage";
 
 const appdata = worldData.features;
 
@@ -81,11 +81,20 @@ export default class App extends Component {
     return (
       <div className="App">
         <div>
-          <LandingPage />
-          <QuestionPage
-            title="What causes outages?"
-            text="description..."
+          <Page
+            title="Power outages in the United States"
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Sed consectetur ac lacus nec vulputate. Fusce felis mauris, 
+            vehicula laoreet fermentum eu, congue a velit. Praesent maximus 
+            mi est, in pharetra eros pellentesque id. Morbi placerat turpis 
+            eu augue varius vestibulum. Phasellus ut odio sed dolor volutpat 
+            semper quis a tellus. Vivamus lobortis tempus ipsum imperdiet 
+            auctor. Aenean bibendum, magna sit amet tincidunt efficitur, 
+            ante nulla accumsan risus, eu feugiat augue urna et ex. Sed nec 
+            bibendum massa, sed volutpat ante. Nunc eu consequat augue. Morbi 
+            fermentum iaculis lorem vitae egestas. Sed varius eu erat in iaculis."
           />
+          <Page title="What causes outages?" text="description..." />
           <VisualizationPage
             title="what causes outages?"
             text="visualization..."
@@ -113,6 +122,19 @@ export default class App extends Component {
           <VisualizationPage
             title="when is it more impactful?"
             text="visualization..."
+          />
+          <Page
+            title="Conclusion"
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Sed consectetur ac lacus nec vulputate. Fusce felis mauris, 
+            vehicula laoreet fermentum eu, congue a velit. Praesent maximus 
+            mi est, in pharetra eros pellentesque id. Morbi placerat turpis 
+            eu augue varius vestibulum. Phasellus ut odio sed dolor volutpat 
+            semper quis a tellus. Vivamus lobortis tempus ipsum imperdiet 
+            auctor. Aenean bibendum, magna sit amet tincidunt efficitur, 
+            ante nulla accumsan risus, eu feugiat augue urna et ex. Sed nec 
+            bibendum massa, sed volutpat ante. Nunc eu consequat augue. Morbi 
+            fermentum iaculis lorem vitae egestas. Sed varius eu erat in iaculis."
           />
           {/* <ColorPicker
             color={this.state.currentColor}
