@@ -51,7 +51,7 @@ export default class App extends Component {
   onResize = () => {
     this.setState({
       screenWidth: window.innerWidth,
-      screenHeight: window.innerHeight - 120
+      screenHeight: window.innerHeight
     });
   };
 
@@ -96,7 +96,7 @@ export default class App extends Component {
           />
           <QuestionPage title="What causes outages?" text="description..." />
           <VisualizationPage
-            title="what causes outages?"
+            title="What causes power outages?"
             text="visualization..."
           />
           <QuestionPage
@@ -108,19 +108,19 @@ export default class App extends Component {
             text="visualization..."
           />
           <QuestionPage
-            title="where and when is it more common?"
+            title="Where and when is it more common?"
             text="description..."
           />
           <VisualizationPage
-            title="where and when is it more common?"
+            title="Where and when is it more common?"
             text="visualization..."
           />
           <QuestionPage
-            title="when is it more impactful?"
+            title="When is it more impactful?"
             text="description..."
           />
           <VisualizationPage
-            title="when is it more impactful?"
+            title="When is it more impactful?"
             text="visualization..."
           />
           <Page
@@ -139,19 +139,15 @@ export default class App extends Component {
           {/* <ColorPicker
             color={this.state.currentColor}
             handleColor={this.handleColor}
-          />
-          <StatLine allData={appdata} filteredData={filteredAppdata} />
+          /> */}
+          {/* <StatLine allData={appdata} filteredData={filteredAppdata} /> */}
           <StreamGraph
             hoverElement={this.state.hover}
             onHover={this.onHover}
             onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth, this.state.screenHeight / 3]}
-          />
-          <Brush
-            changeBrush={this.onBrush}
-            size={[this.state.screenWidth, 50]}
+            size={[this.state.screenWidth -15, this.state.screenHeight / 3]}
           />
           <WorldMap
             hoverElement={this.state.hover}
@@ -159,7 +155,7 @@ export default class App extends Component {
             onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth, this.state.screenHeight / 3]}
+            size={[this.state.screenWidth -15, this.state.screenHeight / 3]}
           />
           <BarChart
             hoverElement={this.state.hover}
@@ -167,8 +163,12 @@ export default class App extends Component {
             onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth, this.state.screenHeight / 3]}
-          /> */}
+            size={[this.state.screenWidth - 15, this.state.screenHeight / 3]}
+          />
+          <Brush
+            changeBrush={this.onBrush}
+            size={[this.state.screenWidth - 15, 50]}
+          />
         </div>
       </div>
     );
