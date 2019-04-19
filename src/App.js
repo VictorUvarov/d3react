@@ -5,12 +5,14 @@ import StreamGraph from "./components/StreamGraph/StreamGraph";
 import Brush from "./components/Brush/Brush";
 import StatLine from "./components/StatLine/StatLine";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
+import LandingPage from "./components/LandingPage/LandingPage";
 import worldData from "./data/world";
 import olympicData from "./data/olympics.csv";
 import { range } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { csv } from "d3-request";
-import "./App.css";
+import QuestionPage from "./components/QuestionPage/QuestionPage";
+import VisualizationPage from "./components/VisualizationPage/VisualizationPage";
 
 const appdata = worldData.features;
 
@@ -79,7 +81,40 @@ export default class App extends Component {
     return (
       <div className="App">
         <div>
-          <ColorPicker
+          <LandingPage />
+          <QuestionPage
+            title="What causes outages?"
+            text="description..."
+          />
+          <VisualizationPage
+            title="what causes outages?"
+            text="visualization..."
+          />
+          <QuestionPage
+            title="What are the most common causes?"
+            text="description..."
+          />
+          <VisualizationPage
+            title="What are the most common causes?"
+            text="visualization..."
+          />
+          <QuestionPage
+            title="where and when is it more common?"
+            text="description..."
+          />
+          <VisualizationPage
+            title="where and when is it more common?"
+            text="visualization..."
+          />
+          <QuestionPage
+            title="when is it more impactful?"
+            text="description..."
+          />
+          <VisualizationPage
+            title="when is it more impactful?"
+            text="visualization..."
+          />
+          {/* <ColorPicker
             color={this.state.currentColor}
             handleColor={this.handleColor}
           />
@@ -111,7 +146,7 @@ export default class App extends Component {
             colorScale={colorScale}
             data={filteredAppdata}
             size={[this.state.screenWidth, this.state.screenHeight / 3]}
-          />
+          /> */}
         </div>
       </div>
     );
