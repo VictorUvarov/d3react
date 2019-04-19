@@ -94,7 +94,7 @@ export default class App extends Component {
             bibendum massa, sed volutpat ante. Nunc eu consequat augue. Morbi 
             fermentum iaculis lorem vitae egestas. Sed varius eu erat in iaculis."
           />
-          <Page title="What causes outages?" text="description..." />
+          <QuestionPage title="What causes outages?" text="description..." />
           <VisualizationPage
             title="what causes outages?"
             text="visualization..."
