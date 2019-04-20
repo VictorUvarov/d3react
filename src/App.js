@@ -5,12 +5,14 @@ import StreamGraph from "./components/StreamGraph/StreamGraph";
 import Brush from "./components/Brush/Brush";
 import StatLine from "./components/StatLine/StatLine";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
+import Page from "./components/Page/Page";
+import QuestionPage from "./components/QuestionPage/QuestionPage";
+import VisualizationPage from "./components/VisualizationPage/VisualizationPage";
 import worldData from "./data/world";
 import olympicData from "./data/olympics.csv";
 import { range } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { csv } from "d3-request";
-import "./App.css";
 
 const appdata = worldData.features;
 
@@ -49,7 +51,7 @@ export default class App extends Component {
   onResize = () => {
     this.setState({
       screenWidth: window.innerWidth,
-      screenHeight: window.innerHeight - 120
+      screenHeight: window.innerHeight
     });
   };
 
@@ -79,22 +81,73 @@ export default class App extends Component {
     return (
       <div className="App">
         <div>
-          <ColorPicker
+          <Page
+            title="Power outages in the United States"
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Sed consectetur ac lacus nec vulputate. Fusce felis mauris, 
+            vehicula laoreet fermentum eu, congue a velit. Praesent maximus 
+            mi est, in pharetra eros pellentesque id. Morbi placerat turpis 
+            eu augue varius vestibulum. Phasellus ut odio sed dolor volutpat 
+            semper quis a tellus. Vivamus lobortis tempus ipsum imperdiet 
+            auctor. Aenean bibendum, magna sit amet tincidunt efficitur, 
+            ante nulla accumsan risus, eu feugiat augue urna et ex. Sed nec 
+            bibendum massa, sed volutpat ante. Nunc eu consequat augue. Morbi 
+            fermentum iaculis lorem vitae egestas. Sed varius eu erat in iaculis."
+          />
+          <QuestionPage title="What causes outages?" text="description..." />
+          <VisualizationPage
+            title="What causes power outages?"
+            text="visualization..."
+          />
+          <QuestionPage
+            title="What are the most common causes?"
+            text="description..."
+          />
+          <VisualizationPage
+            title="What are the most common causes?"
+            text="visualization..."
+          />
+          <QuestionPage
+            title="Where and when is it more common?"
+            text="description..."
+          />
+          <VisualizationPage
+            title="Where and when is it more common?"
+            text="visualization..."
+          />
+          <QuestionPage
+            title="When is it more impactful?"
+            text="description..."
+          />
+          <VisualizationPage
+            title="When is it more impactful?"
+            text="visualization..."
+          />
+          <Page
+            title="Conclusion"
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Sed consectetur ac lacus nec vulputate. Fusce felis mauris, 
+            vehicula laoreet fermentum eu, congue a velit. Praesent maximus 
+            mi est, in pharetra eros pellentesque id. Morbi placerat turpis 
+            eu augue varius vestibulum. Phasellus ut odio sed dolor volutpat 
+            semper quis a tellus. Vivamus lobortis tempus ipsum imperdiet 
+            auctor. Aenean bibendum, magna sit amet tincidunt efficitur, 
+            ante nulla accumsan risus, eu feugiat augue urna et ex. Sed nec 
+            bibendum massa, sed volutpat ante. Nunc eu consequat augue. Morbi 
+            fermentum iaculis lorem vitae egestas. Sed varius eu erat in iaculis."
+          />
+          {/* <ColorPicker
             color={this.state.currentColor}
             handleColor={this.handleColor}
-          />
-          <StatLine allData={appdata} filteredData={filteredAppdata} />
+          /> */}
+          {/* <StatLine allData={appdata} filteredData={filteredAppdata} /> */}
           <StreamGraph
             hoverElement={this.state.hover}
             onHover={this.onHover}
             onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth, this.state.screenHeight / 3]}
-          />
-          <Brush
-            changeBrush={this.onBrush}
-            size={[this.state.screenWidth, 50]}
+            size={[this.state.screenWidth -15, this.state.screenHeight / 3]}
           />
           <WorldMap
             hoverElement={this.state.hover}
@@ -102,7 +155,7 @@ export default class App extends Component {
             onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth, this.state.screenHeight / 3]}
+            size={[this.state.screenWidth -15, this.state.screenHeight / 3]}
           />
           <BarChart
             hoverElement={this.state.hover}
@@ -110,7 +163,11 @@ export default class App extends Component {
             onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth, this.state.screenHeight / 3]}
+            size={[this.state.screenWidth - 15, this.state.screenHeight / 3]}
+          />
+          <Brush
+            changeBrush={this.onBrush}
+            size={[this.state.screenWidth - 15, 50]}
           />
         </div>
       </div>
