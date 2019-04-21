@@ -3,8 +3,8 @@ import WorldMap from "./components/WorldMap/WorldMap";
 import BarChart from "./components/BarChart/BarChart";
 import StreamGraph from "./components/StreamGraph/StreamGraph";
 import Brush from "./components/Brush/Brush";
-import StatLine from "./components/StatLine/StatLine";
-import ColorPicker from "./components/ColorPicker/ColorPicker";
+// import StatLine from "./components/StatLine/StatLine";
+// import ColorPicker from "./components/ColorPicker/ColorPicker";
 import Page from "./components/Page/Page";
 import QuestionPage from "./components/QuestionPage/QuestionPage";
 import VisualizationPage from "./components/VisualizationPage/VisualizationPage";
@@ -36,16 +36,22 @@ export default class App extends Component {
     hover: "none",
     brushExtent: [0, 35],
     currentColor: "blue",
-    colorScale: colorScale
+    colorScale: colorScale,
+    data: []
   };
 
   async componentDidMount() {
     window.addEventListener("resize", this.onResize, false);
     this.onResize();
-    await csv(powerData, (error, data) => {
+
+    csv(powerData, (error, data) => {
       if (error) throw error;
-      console.log(data);
+      this.updateData(data);
     });
+  }
+
+  updateData(data) {
+    this.setState({ data: data });
   }
 
   onResize = () => {
@@ -78,9 +84,15 @@ export default class App extends Component {
         d.launchday >= this.state.brushExtent[0] &&
         d.launchday <= this.state.brushExtent[1]
     );
+    let data = this.state.data === null ? [] : this.state.data;
     return (
       <div className="App">
         <div>
+          {/* <ul>
+            {data.map(d => (
+              <li key={d.id}>{d.description}</li>
+            ))}
+          </ul> */}
           <Page
             title="Power outages in the United States"
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -147,7 +159,7 @@ export default class App extends Component {
             onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth -15, this.state.screenHeight / 3]}
+            size={[this.state.screenWidth - 15, this.state.screenHeight / 3]}
           />
           <WorldMap
             hoverElement={this.state.hover}
@@ -155,7 +167,7 @@ export default class App extends Component {
             onHoverOut={this.onHoverOut}
             colorScale={colorScale}
             data={filteredAppdata}
-            size={[this.state.screenWidth -15, this.state.screenHeight / 3]}
+            size={[this.state.screenWidth - 15, this.state.screenHeight / 3]}
           />
           <BarChart
             hoverElement={this.state.hover}
