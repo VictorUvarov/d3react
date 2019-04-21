@@ -9,7 +9,7 @@ import Page from "./components/Page/Page";
 import QuestionPage from "./components/QuestionPage/QuestionPage";
 import VisualizationPage from "./components/VisualizationPage/VisualizationPage";
 import worldData from "./data/world";
-import olympicData from "./data/olympics.csv";
+import powerData from "./data/power_outages.csv";
 import { range } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { csv } from "d3-request";
@@ -39,12 +39,12 @@ export default class App extends Component {
     colorScale: colorScale
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     window.addEventListener("resize", this.onResize, false);
     this.onResize();
-    csv(olympicData, (error, data) => {
+    await csv(powerData, (error, data) => {
       if (error) throw error;
-      // console.log(data);
+      console.log(data);
     });
   }
 
