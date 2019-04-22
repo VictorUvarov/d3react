@@ -5,6 +5,7 @@ import StreamGraph from "./components/StreamGraph/StreamGraph";
 import Brush from "./components/Brush/Brush";
 // import StatLine from "./components/StatLine/StatLine";
 // import ColorPicker from "./components/ColorPicker/ColorPicker";
+import Blob from "./components/Blob/Blob"
 import Page from "./components/Page/Page";
 import QuestionPage from "./components/QuestionPage/QuestionPage";
 import VisualizationPage from "./components/VisualizationPage/VisualizationPage";
@@ -180,6 +181,10 @@ export default class App extends Component {
           <Brush
             changeBrush={this.onBrush}
             size={[this.state.screenWidth - 15, 50]}
+          />
+
+          <Blob
+            data={filteredAppdata}
           />
         </div>
       </div>
