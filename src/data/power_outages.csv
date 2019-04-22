@@ -1,4 +1,4 @@
-,Event Description,Year,Date Event Began,Date of Restoration,Respondent,Geographic Areas,NERC Region,Tags,Time Event Began,Time of Restoration,Number of Customers Affected,Demand Loss (MW)
+id,description,year,dateBegan,daterestoration,respondent,geographicAreas,NERCRegion,tags,beginTime,restorationTime,numCustomersAffected,demandLoss
 0,Severe Weather - Thunderstorms,2014,6/30/2014,7/2/2014,Exelon Corporation/ComEd,Illinois,RFC,"severe weather, thunderstorm",20:00:00,18:30:00,420000.0,
 1,Severe Weather - Thunderstorms,2014,6/30/2014,7/1/2014,Northern Indiana Public Service Company,North Central Indiana,RFC,"severe weather, thunderstorm",23:20:00,17:00:00,127000.0,
 2,Severe Weather - Thunderstorms,2014,6/30/2014,7/1/2014,We Energies,Southeast  Wisconsin,MRO,"severe weather, thunderstorm",17:55:00,02:53:00,120000.0,424.0
