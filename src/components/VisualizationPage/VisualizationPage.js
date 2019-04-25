@@ -18,6 +18,11 @@ export default class VisualizationPage extends Component {
                 </p>
               </Col>
             </Row>
+            <Row>
+              <Col>
+                {this.props.visualization}
+              </Col>
+            </Row>
           </Container>
         );
     }

@@ -5,7 +5,7 @@ import StreamGraph from "./components/StreamGraph/StreamGraph";
 import Brush from "./components/Brush/Brush";
 // import StatLine from "./components/StatLine/StatLine";
 // import ColorPicker from "./components/ColorPicker/ColorPicker";
-import Blob from "./components/Blob/Blob"
+import Blob from "./components/Blob/Blob";
 import Page from "./components/Page/Page";
 import QuestionPage from "./components/QuestionPage/QuestionPage";
 import VisualizationPage from "./components/VisualizationPage/VisualizationPage";
@@ -111,6 +111,7 @@ export default class App extends Component {
           <VisualizationPage
             title="What causes power outages?"
             text="visualization..."
+            visualization={<Blob data={filteredAppdata} />}
           />
           <QuestionPage
             title="What are the most common causes?"
@@ -119,6 +120,19 @@ export default class App extends Component {
           <VisualizationPage
             title="What are the most common causes?"
             text="visualization..."
+            visualization={
+              <BarChart
+                hoverElement={this.state.hover}
+                onHover={this.onHover}
+                onHoverOut={this.onHoverOut}
+                colorScale={colorScale}
+                data={filteredAppdata}
+                size={[
+                  this.state.screenWidth - 100,
+                  this.state.screenHeight / 3
+                ]}
+              />
+            }
           />
           <QuestionPage
             title="Where and when is it more common?"
@@ -127,6 +141,19 @@ export default class App extends Component {
           <VisualizationPage
             title="Where and when is it more common?"
             text="visualization..."
+            visualization={
+              <WorldMap
+                hoverElement={this.state.hover}
+                onHover={this.onHover}
+                onHoverOut={this.onHoverOut}
+                colorScale={colorScale}
+                data={appdata}
+                size={[
+                  this.state.screenWidth - 100,
+                  this.state.screenHeight / 3
+                ]}
+              />
+            }
           />
           <QuestionPage
             title="When is it more impactful?"
@@ -135,6 +162,25 @@ export default class App extends Component {
           <VisualizationPage
             title="When is it more impactful?"
             text="visualization..."
+            visualization={
+              <div>
+                <StreamGraph
+                  hoverElement={this.state.hover}
+                  onHover={this.onHover}
+                  onHoverOut={this.onHoverOut}
+                  colorScale={colorScale}
+                  data={filteredAppdata}
+                  size={[
+                    this.state.screenWidth - 100,
+                    this.state.screenHeight / 3
+                  ]}
+                />
+                <Brush
+                  changeBrush={this.onBrush}
+                  size={[this.state.screenWidth - 100, 50]}
+                />
+              </div>
+            }
           />
           <Page
             title="Conclusion"
@@ -148,43 +194,6 @@ export default class App extends Component {
             ante nulla accumsan risus, eu feugiat augue urna et ex. Sed nec 
             bibendum massa, sed volutpat ante. Nunc eu consequat augue. Morbi 
             fermentum iaculis lorem vitae egestas. Sed varius eu erat in iaculis."
-          />
-          {/* <ColorPicker
-            color={this.state.currentColor}
-            handleColor={this.handleColor}
-          /> */}
-          {/* <StatLine allData={appdata} filteredData={filteredAppdata} /> */}
-          <StreamGraph
-            hoverElement={this.state.hover}
-            onHover={this.onHover}
-            onHoverOut={this.onHoverOut}
-            colorScale={colorScale}
-            data={filteredAppdata}
-            size={[this.state.screenWidth - 15, this.state.screenHeight / 3]}
-          />
-          <WorldMap
-            hoverElement={this.state.hover}
-            onHover={this.onHover}
-            onHoverOut={this.onHoverOut}
-            colorScale={colorScale}
-            data={filteredAppdata}
-            size={[this.state.screenWidth - 15, this.state.screenHeight / 3]}
-          />
-          <BarChart
-            hoverElement={this.state.hover}
-            onHover={this.onHover}
-            onHoverOut={this.onHoverOut}
-            colorScale={colorScale}
-            data={filteredAppdata}
-            size={[this.state.screenWidth - 15, this.state.screenHeight / 3]}
-          />
-          <Brush
-            changeBrush={this.onBrush}
-            size={[this.state.screenWidth - 15, 50]}
-          />
-
-          <Blob
-            data={filteredAppdata}
           />
         </div>
       </div>
