@@ -72,7 +72,7 @@ export default class App extends Component {
             visualization={
               <PieChart
                 data={data}
-                title="Power Outage Causes"
+                title="Power Outage Causes and Number of Customer Affected"
                 screenSize={[screenWidth, screenHeight]}
               />
             }
