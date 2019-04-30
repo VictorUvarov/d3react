@@ -9,47 +9,6 @@ body {
 }
 
 /* blob css */
-#counter-label {
-  color: #a42828;
-}
-
-.blob-header h5, #blob-legend {
-display: inline;
-}
-
-.blob-header {
-margin-bottom: 90px;
-width: 60%;
-margin-left: auto;
-margin-right: auto;
-}
-
-.svg-blob-canvas {
-width: 100%;
-height: 60vh;
-margin-left: auto;
-margin-right: auto;
-display: block;
-}
-
-#counter-header {
-font-size: 2em;
-text-align: center;
-}
-
-#counter-label {
-font-size: 3em;
-width: 111px;
-margin: 0;
-}
-
-#blob-explanation {
-font-size: 1.3em;
-width: 100%;
-margin: 0 auto;
-text-align: center;
-}
-
-#blob-explanation>h5 {
-opacity: 0;
+circle {
+  fill: black
 }

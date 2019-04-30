@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import VisualizationPage from "./components/VisualizationPage/VisualizationPage";
 import QuestionPage from "./components/QuestionPage/QuestionPage";
 import PieChart from "./components/PieChart/PieChart";
-// import Blob from "./components/Blob/Blob";
+import Blob from "./components/Blob/Blob";
 import Page from "./components/Page/Page";
 import powerData from "./data/power_outages.csv";
 import { csv } from "d3-request";
@@ -59,9 +59,15 @@ export default class App extends Component {
           <QuestionPage title="What causes outages?" text="description..." />
           <VisualizationPage
             title="What causes power outages?"
-            text="visualization... blob"
-            // visualization={<Blob data={data} />}
-            visualization={<div />}
+            text="Each node represents 100 outages"
+            visualization={
+            <Blob 
+              data={data} 
+              size={[
+                screenWidth, screenHeight
+              ]}
+            />
+            }
           />
           <QuestionPage
             title="What are the most common causes?"
