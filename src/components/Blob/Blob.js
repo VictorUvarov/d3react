@@ -114,8 +114,8 @@ export default class Blob extends Component {
 
         
         return (
-            <div class="slide blob">
-                <div class="blob-header">
+            <div className="slide blob">
+                <div className="blob-header">
                     <div id="canvas-wrapper">
                         <div id="counter-header">
                             In (year), (number of outages) happened due to (reason).
@@ -126,7 +126,7 @@ export default class Blob extends Component {
                         <h5> represents 100 people effected</h5>
                         </div>
                         <div id="blob-canvas">
-                        <svg class="svg-blob-canvas"></svg>
+                        <svg className="svg-blob-canvas"></svg>
                         </div>
                     </div>
                 </div>
