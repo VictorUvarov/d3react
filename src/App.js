@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import VisualizationPage from "./components/VisualizationPage/VisualizationPage";
 import QuestionPage from "./components/QuestionPage/QuestionPage";
-import BarChart from "./components/BarChart/BarChart";
+import PieChart from "./components/PieChart/PieChart";
 // import Blob from "./components/Blob/Blob";
 import Page from "./components/Page/Page";
 import powerData from "./data/power_outages.csv";
@@ -35,7 +35,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { data } = this.state;
+    const { data, screenWidth, screenHeight } = this.state;
 
     if (data === null) {
       return <div>loading...</div>;
@@ -69,8 +69,13 @@ export default class App extends Component {
           />
           <VisualizationPage
             title="What are the most common causes?"
-            text="visualization... bar chart"
-            visualization={<BarChart data={data} title="Power Outage Causes"/>}
+            visualization={
+              <PieChart
+                data={data}
+                title="Power Outage Causes"
+                screenSize={[screenWidth, screenHeight]}
+              />
+            }
           />
           <QuestionPage
             title="Where and when is it more common?"
