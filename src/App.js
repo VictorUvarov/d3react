@@ -3,8 +3,6 @@ import WorldMap from "./components/WorldMap/WorldMap";
 import BarChart from "./components/BarChart/BarChart";
 import StreamGraph from "./components/StreamGraph/StreamGraph";
 import Brush from "./components/Brush/Brush";
-// import StatLine from "./components/StatLine/StatLine";
-// import ColorPicker from "./components/ColorPicker/ColorPicker";
 import Blob from "./components/Blob/Blob";
 import Page from "./components/Page/Page";
 import QuestionPage from "./components/QuestionPage/QuestionPage";
@@ -14,6 +12,7 @@ import powerData from "./data/power_outages.csv";
 import { range } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { csv } from "d3-request";
+import USAMap from "react-usa-map";
 
 const appdata = worldData.features;
 
@@ -38,7 +37,7 @@ export default class App extends Component {
     brushExtent: [0, 35],
     currentColor: "blue",
     colorScale: colorScale,
-    data: []
+    data: null
   };
 
   async componentDidMount() {
@@ -47,12 +46,8 @@ export default class App extends Component {
 
     csv(powerData, (error, data) => {
       if (error) throw error;
-      this.updateData(data);
+      this.setState({ data: data });
     });
-  }
-
-  updateData(data) {
-    this.setState({ data: data });
   }
 
   onResize = () => {
@@ -79,21 +74,24 @@ export default class App extends Component {
     this.setState({ currentColor: color.hex, colorScale: newScale });
   };
 
+  mapHandler = (event) => {
+    alert(event.target.dataset.name);
+  };
+
   render() {
     const filteredAppdata = appdata.filter(
       (d, i) =>
         d.launchday >= this.state.brushExtent[0] &&
         d.launchday <= this.state.brushExtent[1]
     );
-    let data = this.state.data === null ? [] : this.state.data;
+    const { data } = this.state;
+
+    if (data === null) {
+      return <div>loading...</div>;
+    }
     return (
       <div className="App">
         <div>
-          {/* <ul>
-            {data.map(d => (
-              <li key={d.id}>{d.description}</li>
-            ))}
-          </ul> */}
           <Page
             title="Power outages in the United States"
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -142,17 +140,7 @@ export default class App extends Component {
             title="Where and when is it more common?"
             text="visualization..."
             visualization={
-              <WorldMap
-                hoverElement={this.state.hover}
-                onHover={this.onHover}
-                onHoverOut={this.onHoverOut}
-                colorScale={colorScale}
-                data={appdata}
-                size={[
-                  this.state.screenWidth - 100,
-                  this.state.screenHeight / 3
-                ]}
-              />
+              <USAMap onClick={this.mapHandler} />
             }
           />
           <QuestionPage
