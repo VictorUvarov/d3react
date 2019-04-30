@@ -20,6 +20,7 @@ export default class DropDownButton extends Component {
       dropdownOpen: !prevState.dropdownOpen
     }));
   };
+
   render() {
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -28,7 +29,13 @@ export default class DropDownButton extends Component {
           <DropdownItem header>{this.props.header}</DropdownItem>
           <DropdownItem divider />
           {this.props.years.map((year, idx) => (
-            <DropdownItem key={idx} onClick={() => this.props.updateYear(year)}>
+            <DropdownItem
+              key={idx}
+              onClick={() => {
+                this.props.updateYear(year);
+                this.setState({year: year});
+              }}
+            >
               {year}
             </DropdownItem>
           ))}
