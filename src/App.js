@@ -1,27 +1,13 @@
 import React, { Component } from "react";
-import WorldMap from "./components/WorldMap/WorldMap";
-import BarChart from "./components/BarChart/BarChart";
-import StreamGraph from "./components/StreamGraph/StreamGraph";
-import Brush from "./components/Brush/Brush";
-// import StatLine from "./components/StatLine/StatLine";
-// import ColorPicker from "./components/ColorPicker/ColorPicker";
 import Blob from "./components/Blob/Blob";
 import Page from "./components/Page/Page";
 import QuestionPage from "./components/QuestionPage/QuestionPage";
 import VisualizationPage from "./components/VisualizationPage/VisualizationPage";
-import worldData from "./data/world";
+import CustomBarChart from "./components/CustomBarChart/CustomBarChart";
 import powerData from "./data/power_outages.csv";
-import { range } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { csv } from "d3-request";
-
-const appdata = worldData.features;
-
-appdata.forEach((d, i) => {
-  const offset = Math.random();
-  d.launchday = i;
-  d.data = range(30).map((p, q) => (q < i ? 0 : Math.random() * 2 + offset));
-});
+import USAMap from "react-usa-map";
 
 let colors = ["#e6f0ff", "#80b3ff", "#1a75ff", "#003d99"];
 let thresholds = [5, 10, 20, 30];
@@ -38,7 +24,7 @@ export default class App extends Component {
     brushExtent: [0, 35],
     currentColor: "blue",
     colorScale: colorScale,
-    data: []
+    data: null
   };
 
   async componentDidMount() {
@@ -47,12 +33,8 @@ export default class App extends Component {
 
     csv(powerData, (error, data) => {
       if (error) throw error;
-      this.updateData(data);
+      this.setState({ data: data });
     });
-  }
-
-  updateData(data) {
-    this.setState({ data: data });
   }
 
   onResize = () => {
@@ -80,20 +62,14 @@ export default class App extends Component {
   };
 
   render() {
-    const filteredAppdata = appdata.filter(
-      (d, i) =>
-        d.launchday >= this.state.brushExtent[0] &&
-        d.launchday <= this.state.brushExtent[1]
-    );
-    let data = this.state.data === null ? [] : this.state.data;
+    const { data } = this.state;
+
+    if (data === null) {
+      return <div>loading...</div>;
+    }
     return (
       <div className="App">
         <div>
-          {/* <ul>
-            {data.map(d => (
-              <li key={d.id}>{d.description}</li>
-            ))}
-          </ul> */}
           <Page
             title="Power outages in the United States"
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -111,7 +87,7 @@ export default class App extends Component {
           <VisualizationPage
             title="What causes power outages?"
             text="visualization..."
-            visualization={<Blob data={filteredAppdata} />}
+            visualization={<Blob data={data} />}
           />
           <QuestionPage
             title="What are the most common causes?"
@@ -121,17 +97,18 @@ export default class App extends Component {
             title="What are the most common causes?"
             text="visualization..."
             visualization={
-              <BarChart
-                hoverElement={this.state.hover}
-                onHover={this.onHover}
-                onHoverOut={this.onHoverOut}
-                colorScale={colorScale}
-                data={filteredAppdata}
-                size={[
-                  this.state.screenWidth - 100,
-                  this.state.screenHeight / 3
-                ]}
-              />
+              <CustomBarChart />
+              // <BarChart
+              //   hoverElement={this.state.hover}
+              //   onHover={this.onHover}
+              //   onHoverOut={this.onHoverOut}
+              //   colorScale={colorScale}
+              //   data={filteredAppdata}
+              //   size={[
+              //     this.state.screenWidth - 100,
+              //     this.state.screenHeight / 3
+              //   ]}
+              // />
             }
           />
           <QuestionPage
@@ -141,19 +118,7 @@ export default class App extends Component {
           <VisualizationPage
             title="Where and when is it more common?"
             text="visualization..."
-            visualization={
-              <WorldMap
-                hoverElement={this.state.hover}
-                onHover={this.onHover}
-                onHoverOut={this.onHoverOut}
-                colorScale={colorScale}
-                data={appdata}
-                size={[
-                  this.state.screenWidth - 100,
-                  this.state.screenHeight / 3
-                ]}
-              />
-            }
+            visualization={<USAMap onClick={this.mapHandler} />}
           />
           <QuestionPage
             title="When is it more impactful?"
@@ -162,25 +127,6 @@ export default class App extends Component {
           <VisualizationPage
             title="When is it more impactful?"
             text="visualization..."
-            visualization={
-              <div>
-                <StreamGraph
-                  hoverElement={this.state.hover}
-                  onHover={this.onHover}
-                  onHoverOut={this.onHoverOut}
-                  colorScale={colorScale}
-                  data={filteredAppdata}
-                  size={[
-                    this.state.screenWidth - 100,
-                    this.state.screenHeight / 3
-                  ]}
-                />
-                <Brush
-                  changeBrush={this.onBrush}
-                  size={[this.state.screenWidth - 100, 50]}
-                />
-              </div>
-            }
           />
           <Page
             title="Conclusion"
