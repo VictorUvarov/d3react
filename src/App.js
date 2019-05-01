@@ -3,10 +3,11 @@ import React, { Component } from "react";
 import VisualizationPage from "./components/VisualizationPage/VisualizationPage";
 import QuestionPage from "./components/QuestionPage/QuestionPage";
 import PieChart from "./components/PieChart/PieChart";
-// import Blob from "./components/Blob/Blob";
+import Blob from "./components/Blob/Blob";
 import Page from "./components/Page/Page";
 import powerData from "./data/power_outages.csv";
 import { csv } from "d3-request";
+import LineChart from "./components/LineChart/LineChart";
 
 export default class App extends Component {
   constructor() {
@@ -59,9 +60,15 @@ export default class App extends Component {
           <QuestionPage title="What causes outages?" text="description..." />
           <VisualizationPage
             title="What causes power outages?"
-            text="visualization... blob"
-            // visualization={<Blob data={data} />}
-            visualization={<div />}
+            text="Each node represents 10 power outages"
+            visualization={
+            <Blob 
+              data={data} 
+              size={[
+                screenWidth, screenHeight
+              ]}
+            />
+            }
           />
           <QuestionPage
             title="What are the most common causes?"
@@ -72,7 +79,7 @@ export default class App extends Component {
             visualization={
               <PieChart
                 data={data}
-                title="Power Outage Causes"
+                title="Power Outage Causes and Number of Customer Affected"
                 screenSize={[screenWidth, screenHeight]}
               />
             }
@@ -93,6 +100,13 @@ export default class App extends Component {
           <VisualizationPage
             title="When is it more impactful?"
             text="visualization... bubble chart"
+          />
+          <QuestionPage
+            title="When does it happen?"
+            text="description..."
+          />
+          <VisualizationPage
+            visualization={<LineChart/>}
           />
           <Page
             title="Conclusion"

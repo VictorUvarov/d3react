@@ -1,38 +1,86 @@
 import React, { Component } from "react";
 import { Pie } from "react-chartjs-2";
-import dummyData from "../../data/power_outages_year";
+import DropDownButton from "./../DropDownButton/DropDownButton";
 
 export default class PieChart extends Component {
   static defaultProps = {
     displayTitle: true,
     displayLegend: true,
-    legendPosition: "bottom",
+    legendPosition: "right",
     title: "Title"
   };
 
   constructor(props) {
     super(props);
+    // remove rows in the data with no customer affected amount
+    let filteredData = props.data.filter(d => {
+      return d.numCustomersAffected !== "";
+    });
+    // get the unique list of years
+    let years = [];
+    filteredData.forEach(item => {
+      let i = years.findIndex(x => x.year === item.year);
+      if (i <= -1) {
+        years.push(item.year);
+      }
+    });
+    years = [...new Set(years)];
+
     this.state = {
-      data: props.data,
+      data: filteredData,
       year: props.data[0].year,
+      years: years,
       screenWidth: props.screenSize[0],
       screenHeight: props.screenSize[1]
     };
   }
 
+  updateYear = year => {
+    this.setState({ year: year });
+  };
+
   render() {
     const { data } = this.state;
 
-    let chartData = data.filter(d => {
+    // filter data based on current year
+    let filteredData = data.filter(d => {
       return d.year === this.state.year;
     });
 
-    console.log(chartData);
+    // remove duplicate descriptions, since pie chart categories are descriptions
+    let unique = [];
+    filteredData.forEach(item => {
+      let i = unique.findIndex(x => x.description === item.description);
+      if (i <= -1) {
+        unique.push({
+          year: item.year,
+          description: item.description,
+          numCustomersAffected: item.numCustomersAffected
+        });
+      }
+    });
 
-    // TODO: Map data to visualization
-    // labels: [description]
-    // data : [numCustomersAffected]
-    // backgroundColor: [random]
+    // since chart.js needs a special format for chart data
+    // split the unique data so that it can be added to chart data
+    let labels = [];
+    let values = [];
+    let colors = [];
+    unique.forEach(d => {
+      labels.push(d.description);
+      values.push(parseInt(d.numCustomersAffected));
+      colors.push('#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6));
+    });
+
+    // chart.js data format
+    let chartData = {
+      labels: labels,
+      datasets: [
+        {
+          data: values,
+          backgroundColor: colors
+        }
+      ]
+    };
 
     if (data === null) {
       return <div>loading...</div>;
@@ -40,8 +88,13 @@ export default class PieChart extends Component {
 
     return (
       <div>
+        <DropDownButton
+          header="Select a Year"
+          years={this.state.years}
+          updateYear={this.updateYear}
+        />
         <Pie
-          data={dummyData}
+          data={chartData}
           options={{
             title: {
               display: this.props.displayTitle,
@@ -55,9 +108,9 @@ export default class PieChart extends Component {
             layout: {
               padding: {
                 left: 0,
-                right: 0,
+                right: 50,
                 bottom: 50,
-                top: 100
+                top: 0
               }
             }
           }}
