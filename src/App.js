@@ -59,7 +59,7 @@ export default class App extends Component {
           <QuestionPage title="What causes outages?" text="description..." />
           <VisualizationPage
             title="What causes power outages?"
-            text="Each node represents 100 outages"
+            text="Each node represents 10 power outages"
             visualization={
             <Blob 
               data={data} 
