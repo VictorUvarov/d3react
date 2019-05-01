@@ -7,6 +7,7 @@ import PieChart from "./components/PieChart/PieChart";
 import Page from "./components/Page/Page";
 import powerData from "./data/power_outages.csv";
 import { csv } from "d3-request";
+import LineChart from "./components/LineChart/LineChart";
 
 export default class App extends Component {
   constructor() {
@@ -93,6 +94,13 @@ export default class App extends Component {
           <VisualizationPage
             title="When is it more impactful?"
             text="visualization... bubble chart"
+          />
+          <QuestionPage
+            title="When does it happen?"
+            text="description..."
+          />
+          <VisualizationPage
+            visualization={<LineChart/>}
           />
           <Page
             title="Conclusion"

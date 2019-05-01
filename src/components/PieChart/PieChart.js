@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Pie } from "react-chartjs-2";
-import colors from "../../data/colors";
 import DropDownButton from "./../DropDownButton/DropDownButton";
 
 export default class PieChart extends Component {
@@ -65,9 +64,11 @@ export default class PieChart extends Component {
     // split the unique data so that it can be added to chart data
     let labels = [];
     let values = [];
+    let colors = [];
     unique.forEach(d => {
       labels.push(d.description);
       values.push(parseInt(d.numCustomersAffected));
+      colors.push('#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6));
     });
 
     // chart.js data format
