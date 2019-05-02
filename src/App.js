@@ -4,7 +4,7 @@ import QuestionPage from "./components/QuestionPage/QuestionPage";
 import PieChart from "./components/PieChart/PieChart";
 import Blob from "./components/Blob/Blob";
 import Page from "./components/Page/Page";
-import powerData from "./data/power_outages_v2.csv";
+import powerData from "./data/power_outages_v3.csv";
 import { csv } from "d3-request";
 import LineChart from "./components/LineChart/LineChart";
 import USMap from "./components/USMap/USMap";
@@ -53,9 +53,10 @@ export default class App extends Component {
           <QuestionPage title="What causes outages?" text="description..." />
           <VisualizationPage
             title="What causes power outages?"
-            text="Each node represents 10 power outages"
+            text="Each node represents about 10 power outages"
             visualization={
-              <Blob data={data} screenSize={[screenWidth, screenHeight]} />
+              <Blob data={data} 
+              screenSize={[screenWidth, screenHeight]} />
             }
           />
           <QuestionPage
