@@ -5,7 +5,7 @@ import QuestionPage from "./components/QuestionPage/QuestionPage";
 import PieChart from "./components/PieChart/PieChart";
 import Blob from "./components/Blob/Blob";
 import Page from "./components/Page/Page";
-import powerData from "./data/power_outages.csv";
+import powerData from "./data/power_outages_v2.csv";
 import { csv } from "d3-request";
 
 export default class App extends Component {
