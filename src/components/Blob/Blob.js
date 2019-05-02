@@ -29,6 +29,13 @@ export default class Blob extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      width: nextProps.screenSize[0],
+      height: nextProps.screenSize[1]
+    });
+  }
+
   componentDidMount() {
     var nodes = [];
     let filteredData = this.state.data.filter(d => {
