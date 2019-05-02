@@ -1,22 +1,31 @@
 import React, { Component } from "react";
-//import * as d3 from "d3";
 import { ForceGraph, ForceGraphNode } from "react-vis-force";
+import DropDownMenu from "./../DropDownMenu/DropDownMenu";
 
 export default class Blob extends Component {
   constructor(props) {
     super(props);
-    //var screenSize = props.data.length / 5;
+    let filteredData = props.data.filter(d => {
+      return d;
+    });
+    let causes = []
+
+    filteredData.forEach(item => {
+      let i = causes.findIndex(x => x.description === item.description);
+      if (i <= -1) {
+        causes.push(item.description);
+      }
+    });
+    causes = [...new Set(causes)];
+
     this.state = {
       data: props.data,
-      /*nodes: d3.range(screenSize).map(function(d) {
-        return { radius: 5 };
-      }),*/
       nodes: [],
-      width: this.props.screenSize[0],
-      height: this.props.screenSize[1],
-      /*simulation: null,
-      xInitCircle: [],
-      yInitCircle: [],*/
+      width: props.size[0],
+      height: props.size[1],
+      cause: causes[0],
+      causes: causes,
+      causeCount: 0,
     };
   }
 
@@ -28,59 +37,67 @@ export default class Blob extends Component {
   }
 
   componentDidMount() {
-    for(let counter = 0; counter < this.state.data.length / 10; counter++) {
-      this.state.nodes.push(
-        <ForceGraphNode key={counter} node={{ id: counter }} fill="black" />
+    var nodes = [];
+    let filteredData = this.state.data.filter(d => {
+      return d.description === this.state.cause
+    });
+    var i = 0;
+    for(; i < filteredData.length / 10; i++) {
+      nodes.push(
+        <ForceGraphNode node={{ id: i }} fill="red" />
       );
     }
-    // var ticked = () => {
-    //   const u = d3
-    //     .select("svg")
-    //     .selectAll("circle")
-    //     .data(this.state.nodes);
+    for(; i < this.state.data.length / 10; i++) {
+      nodes.push(
+        <ForceGraphNode node={{ id: i }} fill="black" />
+      );
+    }
+    this.setState( 
+      {causeCount : filteredData.length,
+      nodes: nodes} );
+  }
 
-    //   u.enter()
-    //     .append("circle")
-    //     .attr("r", function(d) {
-    //       return d.radius;
-    //     })
-    //     .merge(u)
-    //     .attr("cx", function(d) {
-    //       return d.x;
-    //     })
-    //     .attr("cy", function(d) {
-    //       return d.y;
-    //     });
-
-    //   u.exit().remove();
-    // };
-    // this.state.simulation = d3
-    //   .forceSimulation(this.state.nodes)
-    //   .force("charge", d3.forceManyBody().strength(0.25))
-    //   .force(
-    //     "center",
-    //     d3.forceCenter(this.state.width / 2, this.state.height / 2)
-    //   )
-    //   .force(
-    //     "collision",
-    //     d3.forceCollide().radius(function(d) {
-    //       return d.radius;
-    //     })
-    //   )
-    //   .on("tick", ticked);
-    
+  updateCause = cause => {
+    var nodes = [];
+    let filteredData = this.state.data.filter(d => {
+      return d.description === cause
+    });
+    var i = 0;
+    for(; i < filteredData.length / 10; i++) {
+      nodes.push(
+        <ForceGraphNode node={{ id: i }} fill="red" />
+      );
+    }
+    console.log(i);
+    for(; i < this.state.data.length / 10; i++) {
+      nodes.push(
+        <ForceGraphNode node={{ id: i }} fill="black" />
+      );
+    }
+    this.setState( 
+      {cause: cause,
+      causeCount : filteredData.length, 
+      nodes: nodes} );
   }
 
   render() {
-    // return (
-    // <svg width={this.state.width} height={this.state.height}></svg>
-    // );
+    console.log(this.state.cause);
     return (
-      <ForceGraph simulationOptions={{ height: this.state.height, 
-        width: this.state.width,
-        animate: true }}>
-        {this.state.nodes}
-      </ForceGraph>
+      <div>
+        <label> 
+          {this.state.causeCount} out of {this.state.data.length} outages due to {this.state.cause} in the last 15 years.
+        </label>
+        <DropDownMenu
+          header="Select a cause"
+          causes={this.state.causes}
+          updateCause={this.updateCause}
+        />
+        <ForceGraph simulationOptions={{ height: this.state.height, 
+          width: this.state.width,
+          animate: true }}>
+          {this.state.nodes}
+        </ForceGraph>
+      </div>
     );
   }
 }
