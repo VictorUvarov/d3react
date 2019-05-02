@@ -100,7 +100,7 @@ export default class App extends Component {
             text="description..."
           />
           <VisualizationPage
-            visualization={<LineChart/>}
+            visualization={<LineChart data={data} title="Number of people affected over time"/>}
           />
           <Page
             title="Conclusion"
