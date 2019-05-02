@@ -81,8 +81,8 @@ export default class App extends Component {
             title="Where is it more common?"
             visualization={
               <div>
-                <img src={usaMapImage} />
-                <img src={legend} />
+                <img src={usaMapImage} alt="Map of the United States"/>
+                <img src={legend} alt="Map legend"/>
               </div>
             }
           />

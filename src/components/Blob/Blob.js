@@ -8,7 +8,6 @@ export default class Blob extends Component {
     //var size = props.data.length / 5;
     this.state = {
       data: props.data,
-      counter: 0,
       /*nodes: d3.range(size).map(function(d) {
         return { radius: 5 };
       }),*/
@@ -22,9 +21,9 @@ export default class Blob extends Component {
   }
 
   componentDidMount() {
-    for(; this.state.counter < this.state.data.length / 10; this.state.counter++) {
+    for(let counter = 0; counter < this.state.data.length / 10; counter++) {
       this.state.nodes.push(
-        <ForceGraphNode node={{ id: this.state.counter }} fill="black" />
+        <ForceGraphNode node={{ id: counter }} fill="black" />
       );
     }
     // var ticked = () => {
