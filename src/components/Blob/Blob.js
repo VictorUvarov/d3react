@@ -5,25 +5,32 @@ import { ForceGraph, ForceGraphNode } from "react-vis-force";
 export default class Blob extends Component {
   constructor(props) {
     super(props);
-    //var size = props.data.length / 5;
+    //var screenSize = props.data.length / 5;
     this.state = {
       data: props.data,
-      /*nodes: d3.range(size).map(function(d) {
+      /*nodes: d3.range(screenSize).map(function(d) {
         return { radius: 5 };
       }),*/
       nodes: [],
-      width: this.props.size[0],
-      height: this.props.size[1],
+      width: this.props.screenSize[0],
+      height: this.props.screenSize[1],
       /*simulation: null,
       xInitCircle: [],
       yInitCircle: [],*/
     };
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      width: nextProps.screenSize[0],
+      height: nextProps.screenSize[1]
+    });
+  }
+
   componentDidMount() {
     for(let counter = 0; counter < this.state.data.length / 10; counter++) {
       this.state.nodes.push(
-        <ForceGraphNode node={{ id: counter }} fill="black" />
+        <ForceGraphNode key={counter} node={{ id: counter }} fill="black" />
       );
     }
     // var ticked = () => {

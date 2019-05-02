@@ -7,8 +7,7 @@ import Page from "./components/Page/Page";
 import powerData from "./data/power_outages_v2.csv";
 import { csv } from "d3-request";
 import LineChart from "./components/LineChart/LineChart";
-import usaMapImage from "./assets/usamap.png";
-import legend from "./assets/legend.png";
+import USMap from "./components/USMap/USMap";
 
 export default class App extends Component {
   constructor() {
@@ -56,7 +55,7 @@ export default class App extends Component {
             title="What causes power outages?"
             text="Each node represents 10 power outages"
             visualization={
-              <Blob data={data} size={[screenWidth, screenHeight]} />
+              <Blob data={data} screenSize={[screenWidth, screenHeight]} />
             }
           />
           <QuestionPage
@@ -80,10 +79,7 @@ export default class App extends Component {
           <VisualizationPage
             title="Where is it more common?"
             visualization={
-              <div>
-                <img src={usaMapImage} alt="Map of the United States"/>
-                <img src={legend} alt="Map legend"/>
-              </div>
+              <USMap data={data} screenSize={[screenWidth, screenHeight]} />
             }
           />
           <QuestionPage
