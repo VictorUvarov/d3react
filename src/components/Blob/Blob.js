@@ -21,8 +21,8 @@ export default class Blob extends Component {
     this.state = {
       data: props.data,
       nodes: [],
-      width: props.size[0],
-      height: props.size[1],
+      width: props.screenSize[0],
+      height: props.screenSize[1],
       cause: causes[0],
       causes: causes,
       causeCount: 0,
