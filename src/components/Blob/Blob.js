@@ -29,6 +29,13 @@ export default class Blob extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      width: nextProps.screenSize[0],
+      height: nextProps.screenSize[1]
+    });
+  }
+
   componentDidMount() {
     var nodes = [];
     let filteredData = this.state.data.filter(d => {
@@ -45,8 +52,9 @@ export default class Blob extends Component {
         <ForceGraphNode node={{ id: i }} fill="black" />
       );
     }
-    this.setState( {causeCount : filteredData.length} );
-    this.setState( {nodes : nodes} );
+    this.setState( 
+      {causeCount : filteredData.length,
+      nodes: nodes} );
   }
 
   updateCause = cause => {
