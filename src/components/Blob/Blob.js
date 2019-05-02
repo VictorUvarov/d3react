@@ -45,8 +45,9 @@ export default class Blob extends Component {
         <ForceGraphNode node={{ id: i }} fill="black" />
       );
     }
-    this.setState( {causeCount : filteredData.length} );
-    this.setState( {nodes : nodes} );
+    this.setState( 
+      {causeCount : filteredData.length,
+      nodes: nodes} );
   }
 
   updateCause = cause => {
