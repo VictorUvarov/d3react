@@ -14,8 +14,7 @@ export default class USMap extends Component {
   };
 
   mapHandler = event => {
-    const name = event.target.dataset.name;
-    console.log(this.state.config[name]);
+    console.log(event.target.dataset.name);
   };
 
   statesCustomConfig = () => {
