@@ -5,23 +5,15 @@ import { scaleLinear } from "d3-scale";
 import "./USMap.css";
 
 export default class USMap extends Component {
-  state = {
-    currentYear: "2014",
-    modal: true,
-    title: "Title"
-  };
-  updateYear = year => {
-    this.setState({ currentYear: year });
-  };
-
-  toggle = () => {
-    this.setState({
-      modal: !this.state.modal
-    });
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      currentYear: props.data[0].year,
+      title: "United States Map"
+    }
+  }
 
   mapHandler = event => {
-    this.toggle();
     this.setState({ title: event.target.dataset.name });
     console.log(event.target.dataset.name);
   };
@@ -30,6 +22,16 @@ export default class USMap extends Component {
     return this.state.config;
   };
 
+  filterObjectList = (list, key, isNum) => {
+    let filteredList = list.filter(d => {
+      if(isNum)
+        return d[key] !== "" || +d[key] !== 0;
+      else
+        return d[key] !== "";
+    });
+    return filteredList;
+  }
+
   render() {
     const { data } = this.props;
 
@@ -37,28 +39,7 @@ export default class USMap extends Component {
       - Filter out empty numCustomersAffected data
       - We need to sum numCustomersAffected for each state
     */
-    let filteredData = data.filter(d => {
-      return d.numCustomersAffected !== "";
-    });
-    filteredData = data.filter(d => {
-      return +d.numCustomersAffected !== 0;
-    });
-
-    /*
-      - Get the unique list of years, so that we can display one year at a time
-    */
-    let years = [];
-    filteredData.forEach(item => {
-      let i = years.findIndex(x => x.year === item.year);
-      if (i <= -1) {
-        years.push(item.year);
-      }
-    });
-
-    /*
-      - Let JS Set notation parse the array into unique values
-    */
-    years = [...new Set(years)];
+    let filteredData = this.filterObjectList(data, "numCustomersAffected", true);
 
     /*
       - Set up the config object to have keys of state codes
