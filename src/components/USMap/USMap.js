@@ -5,12 +5,23 @@ import { scaleLinear } from "d3-scale";
 import "./USMap.css";
 
 export default class USMap extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
+
+    let filteredData = this.filterObjectList(
+      props.data,
+      "numCustomersAffected",
+      true
+    );
+
+    let config = this.initConfig();
+
     this.state = {
       currentYear: props.data[0].year,
-      title: "United States Map"
-    }
+      title: "United States Map",
+      data: filteredData,
+      config: config
+    };
   }
 
   mapHandler = event => {
@@ -24,27 +35,13 @@ export default class USMap extends Component {
 
   filterObjectList = (list, key, isNum) => {
     let filteredList = list.filter(d => {
-      if(isNum)
-        return d[key] !== "" || +d[key] !== 0;
-      else
-        return d[key] !== "";
+      if (isNum) return d[key] !== "" || +d[key] !== 0;
+      else return d[key] !== "";
     });
     return filteredList;
-  }
+  };
 
-  render() {
-    const { data } = this.props;
-
-    /*
-      - Filter out empty numCustomersAffected data
-      - We need to sum numCustomersAffected for each state
-    */
-    let filteredData = this.filterObjectList(data, "numCustomersAffected", true);
-
-    /*
-      - Set up the config object to have keys of state codes
-      - Add name key of state for pattern matching the data
-    */
+  initConfig = () => {
     let config = {};
     for (let key in stateCodes) {
       if (stateCodes.hasOwnProperty(key)) {
@@ -53,12 +50,17 @@ export default class USMap extends Component {
         };
       }
     }
+    return config;
+  };
+
+  render() {
+    const { data, config } = this.state;
 
     /*
       - Find max and min for numberOfCustomersAffected
     */
     let listNums = [];
-    filteredData.forEach(d => {
+    data.forEach(d => {
       const num = +d.numCustomersAffected;
       listNums.push(num);
     });
@@ -80,7 +82,7 @@ export default class USMap extends Component {
       e.g. config.name ="Alaska"  filteredData.geographicAreas = "Alaska"
       if they match add the color to the config so the map can color that state
     */
-    filteredData.forEach(d => {
+    data.forEach(d => {
       for (const key in config) {
         if (config.hasOwnProperty(key)) {
           const element = config[key];
