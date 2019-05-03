@@ -17,6 +17,7 @@ export default class LineChart extends Component {
     });
     // turn the list of years into a set of years
     years = [...new Set(years)];
+    years.reverse();
 
     // create a list of objects for each year and their sum
     let sums = [];
