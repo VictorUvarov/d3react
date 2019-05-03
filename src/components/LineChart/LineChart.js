@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 
 export default class LineChart extends Component {
   state = {
@@ -48,7 +48,7 @@ export default class LineChart extends Component {
   render() {
     return (
       <div>
-        <Bar
+        <Line
           data={
             {
               labels: this.state.years,
