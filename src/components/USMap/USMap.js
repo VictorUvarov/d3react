@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import USAMap from "react-usa-map";
 import stateCodes from "../../data/states_hash.json";
+import Utils from "../../utils/Utils";
 import { scaleLinear } from "d3-scale";
 import "./USMap.css";
 
@@ -8,7 +9,7 @@ export default class USMap extends Component {
   constructor(props) {
     super(props);
 
-    let filteredData = this.filterObjectList(
+    let filteredData = Utils.filterObjectList(
       props.data,
       "numCustomersAffected",
       true
@@ -16,7 +17,7 @@ export default class USMap extends Component {
 
     let config = this.initConfig();
 
-    let affectedAmounts = this.getListFromListOfObjects(
+    let affectedAmounts = Utils.getListFromListOfObjects(
       filteredData,
       "numCustomersAffected",
       true
@@ -30,10 +31,16 @@ export default class USMap extends Component {
       .domain([min, max])
       .range([colorStart, colorEnd]);
 
-    config = this.addKeyToObjectFromMatchingListKey(
+    config = Utils.addKeyToObjectFromMatchingListKey(
       filteredData,
       config,
-      colorScale
+      colorScale,
+      {
+        matchingKeyInList: "geographicAreas",
+        matchingKeyInObject: "name",
+        valueKey: "numCustomersAffected",
+        keyToAdd: "fill"
+      }
     );
 
     this.state = {
@@ -47,23 +54,6 @@ export default class USMap extends Component {
     };
   }
 
-  mapHandler = event => {
-    this.setState({ title: event.target.dataset.name });
-    console.log(event.target.dataset.name);
-  };
-
-  statesCustomConfig = () => {
-    return this.state.config;
-  };
-
-  filterObjectList = (list, key, isNum) => {
-    let filteredList = list.filter(d => {
-      if (isNum) return d[key] !== "" || +d[key] !== 0;
-      else return d[key] !== "";
-    });
-    return filteredList;
-  };
-
   initConfig = () => {
     let config = {};
     for (let key in stateCodes) {
@@ -76,39 +66,13 @@ export default class USMap extends Component {
     return config;
   };
 
-  getListFromListOfObjects = (list, key, isKeyNum) => {
-    let l = [];
-    list.forEach(element => {
-      isKeyNum === true ? l.push(+element[key]) : l.push(element[key]);
-    });
-    return l;
+  mapHandler = event => {
+    this.setState({ title: event.target.dataset.name });
+    console.log(event.target.dataset.name);
   };
 
-  /*
-    For each data element in power outage data
-    match the config name with the power outage geographic area
-    e.g. config.name ="Alaska"  filteredData.geographicAreas = "Alaska"
-    if they match add the color to the config so the map can color that state
-  */
-  addKeyToObjectFromMatchingListKey = (list, object, valueFunction) => {
-    const matchingKeyInList = "geographicAreas";
-    const matchingKeyInObject = "name";
-    const valueKey = "numCustomersAffected";
-    const keyToAdd = "fill";
-
-    list.forEach(d => {
-      for (const key in object) {
-        if (object.hasOwnProperty(key)) {
-          const element = object[key];
-          if (d[matchingKeyInList].includes(element[matchingKeyInObject])) {
-            const num = +d[valueKey];
-            object[key][keyToAdd] = valueFunction(num);
-          }
-        }
-      }
-    });
-
-    return object;
+  statesCustomConfig = () => {
+    return this.state.config;
   };
 
   render() {
