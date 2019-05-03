@@ -16,11 +16,34 @@ export default class USMap extends Component {
 
     let config = this.initConfig();
 
+    let affectedAmounts = this.getListFromListOfObjects(
+      filteredData,
+      "numCustomersAffected",
+      true
+    );
+    let max = Math.max(...affectedAmounts) / 10;
+    let min = Math.min(...affectedAmounts);
+
+    const colorStart = "#d3d3d3";
+    const colorEnd = "#ff0000";
+    const colorScale = scaleLinear()
+      .domain([min, max])
+      .range([colorStart, colorEnd]);
+
+    config = this.addKeyToObjectFromMatchingListKey(
+      filteredData,
+      config,
+      colorScale
+    );
+
     this.state = {
       currentYear: props.data[0].year,
       title: "United States Map",
       data: filteredData,
-      config: config
+      config: config,
+      max: max,
+      min: min,
+      colorScale: colorScale
     };
   }
 
@@ -53,51 +76,46 @@ export default class USMap extends Component {
     return config;
   };
 
-  render() {
-    const { data, config } = this.state;
-
-    /*
-      - Find max and min for numberOfCustomersAffected
-    */
-    let listNums = [];
-    data.forEach(d => {
-      const num = +d.numCustomersAffected;
-      listNums.push(num);
+  getListFromListOfObjects = (list, key, isKeyNum) => {
+    let l = [];
+    list.forEach(element => {
+      isKeyNum === true ? l.push(+element[key]) : l.push(element[key]);
     });
-    let maxNum = Math.max(...listNums) / 10;
-    let minNum = Math.min(...listNums);
+    return l;
+  };
 
-    /*
-      - Create the color scale
-    */
-    const colorStart = "#d3d3d3";
-    const colorEnd = "#ff0000";
-    const colorScale = scaleLinear()
-      .domain([minNum, maxNum])
-      .range([colorStart, colorEnd]);
+  /*
+    For each data element in power outage data
+    match the config name with the power outage geographic area
+    e.g. config.name ="Alaska"  filteredData.geographicAreas = "Alaska"
+    if they match add the color to the config so the map can color that state
+  */
+  addKeyToObjectFromMatchingListKey = (list, object, valueFunction) => {
+    const matchingKeyInList = "geographicAreas";
+    const matchingKeyInObject = "name";
+    const valueKey = "numCustomersAffected";
+    const keyToAdd = "fill";
 
-    /*
-      For each data element in power outage data
-      match the config name with the power outage geographic area
-      e.g. config.name ="Alaska"  filteredData.geographicAreas = "Alaska"
-      if they match add the color to the config so the map can color that state
-    */
-    data.forEach(d => {
-      for (const key in config) {
-        if (config.hasOwnProperty(key)) {
-          const element = config[key];
-          if (d.geographicAreas.includes(element.name)) {
-            const num = +d.numCustomersAffected;
-            config[key]["fill"] = colorScale(num);
+    list.forEach(d => {
+      for (const key in object) {
+        if (object.hasOwnProperty(key)) {
+          const element = object[key];
+          if (d[matchingKeyInList].includes(element[matchingKeyInObject])) {
+            const num = +d[valueKey];
+            object[key][keyToAdd] = valueFunction(num);
           }
         }
       }
     });
 
+    return object;
+  };
+
+  render() {
     return (
       <USAMap
         onClick={this.mapHandler}
-        customize={config}
+        customize={this.state.config}
         width={this.props.screenSize[0]}
         height={this.props.screenSize[1] - 100}
         title="United States Map"
