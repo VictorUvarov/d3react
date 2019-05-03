@@ -65,13 +65,13 @@ export default class Blob extends Component {
     var i = 0;
     for(; i < filteredData.length / 10; i++) {
       nodes.push(
-        <ForceGraphNode node={{ id: i }} fill="red" />
+        <ForceGraphNode key={i} node={{ id: i }} fill="red" />
       );
     }
     console.log(i);
     for(; i < this.state.data.length / 10; i++) {
       nodes.push(
-        <ForceGraphNode node={{ id: i }} fill="black" />
+        <ForceGraphNode key={i} node={{ id: i }} fill="black" />
       );
     }
     this.setState( 

@@ -16,6 +16,10 @@ export default class PieChart extends Component {
     let filteredData = props.data.filter(d => {
       return d.numCustomersAffected !== "";
     });
+    // remove 0s
+    filteredData = props.data.filter(d => {
+      return +d.numCustomersAffected !== 0;
+    });
     // get the unique list of years
     let years = [];
     filteredData.forEach(item => {
@@ -66,9 +70,12 @@ export default class PieChart extends Component {
     let values = [];
     let colors = [];
     unique.forEach(d => {
+      console.log(d)
       labels.push(d.description);
       values.push(parseInt(d.numCustomersAffected));
-      colors.push('#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6));
+      colors.push(
+        "#" + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
+      );
     });
 
     // chart.js data format

@@ -3,17 +3,26 @@ import USAMap from "react-usa-map";
 import stateCodes from "../../data/states_hash.json";
 import { scaleLinear } from "d3-scale";
 import "./USMap.css";
-import DropDownButton from "../DropDownButton/DropDownButton.js";
 
 export default class USMap extends Component {
   state = {
-    currentYear: "2014"
+    currentYear: "2014",
+    modal: true,
+    title: "Title"
   };
   updateYear = year => {
     this.setState({ currentYear: year });
   };
 
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
+
   mapHandler = event => {
+    this.toggle();
+    this.setState({ title: event.target.dataset.name });
     console.log(event.target.dataset.name);
   };
 
@@ -30,6 +39,9 @@ export default class USMap extends Component {
     */
     let filteredData = data.filter(d => {
       return d.numCustomersAffected !== "";
+    });
+    filteredData = data.filter(d => {
+      return +d.numCustomersAffected !== 0;
     });
 
     /*
@@ -60,13 +72,6 @@ export default class USMap extends Component {
         };
       }
     }
-
-    /*
-      Filter on current year
-    */
-    filteredData = filteredData.filter(d => {
-      return d.year === this.state.currentYear;
-    });
 
     /*
       - Find max and min for numberOfCustomersAffected
@@ -107,20 +112,13 @@ export default class USMap extends Component {
     });
 
     return (
-      <div className="App">
-        <DropDownButton
-          header="Select a Year"
-          years={years}
-          updateYear={this.updateYear}
-        />
-        <USAMap
-          onClick={this.mapHandler}
-          customize={config}
-          width={this.props.screenSize[0]}
-          height={this.props.screenSize[1] - 100}
-          title="United States Map"
-        />
-      </div>
+      <USAMap
+        onClick={this.mapHandler}
+        customize={config}
+        width={this.props.screenSize[0]}
+        height={this.props.screenSize[1] - 100}
+        title="United States Map"
+      />
     );
   }
 }
