@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Pie } from "react-chartjs-2";
 import DropDownButton from "./../DropDownButton/DropDownButton";
+import Utils from "../../utils/Utils";
 
 export default class PieChart extends Component {
   static defaultProps = {
@@ -12,14 +13,13 @@ export default class PieChart extends Component {
 
   constructor(props) {
     super(props);
-    // remove rows in the data with no customer affected amount
-    let filteredData = props.data.filter(d => {
-      return d.numCustomersAffected !== "";
-    });
-    // remove 0s
-    filteredData = props.data.filter(d => {
-      return +d.numCustomersAffected !== 0;
-    });
+
+    let filteredData = Utils.filterObjectList(
+      props.data,
+      "numCustomersAffected",
+      true
+    );
+
     // get the unique list of years
     let years = [];
     filteredData.forEach(item => {
@@ -70,7 +70,7 @@ export default class PieChart extends Component {
     let values = [];
     let colors = [];
     unique.forEach(d => {
-      console.log(d)
+      console.log(d);
       labels.push(d.description);
       values.push(parseInt(d.numCustomersAffected));
       colors.push(

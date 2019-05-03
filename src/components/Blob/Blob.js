@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import { ForceGraph, ForceGraphNode } from "react-vis-force";
 import DropDownMenu from "./../DropDownMenu/DropDownMenu";
+import Utils from "../../utils/Utils";
 
 export default class Blob extends Component {
   constructor(props) {
     super(props);
-    let filteredData = props.data.filter(d => {
-      return d;
-    });
-    let causes = []
+
+    let filteredData = Utils.filterObjectList(
+      props.data,
+      "numCustomersAffected",
+      true
+    );
+    let causes = [];
 
     filteredData.forEach(item => {
       let i = causes.findIndex(x => x.description === item.description);
@@ -25,11 +29,11 @@ export default class Blob extends Component {
       height: props.screenSize[1],
       cause: causes[0],
       causes: causes,
-      causeCount: 0,
+      causeCount: 0
     };
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     this.setState({
       width: nextProps.screenSize[0],
       height: nextProps.screenSize[1]
@@ -39,61 +43,57 @@ export default class Blob extends Component {
   componentDidMount() {
     var nodes = [];
     let filteredData = this.state.data.filter(d => {
-      return d.description === this.state.cause
+      return d.description === this.state.cause;
     });
     var i = 0;
-    for(; i < filteredData.length / 10; i++) {
-      nodes.push(
-        <ForceGraphNode key={i} node={{ id: i }} fill="red" />
-      );
+    for (; i < filteredData.length / 10; i++) {
+      nodes.push(<ForceGraphNode key={i} node={{ id: i }} fill="red" />);
     }
-    for(; i < this.state.data.length / 10; i++) {
-      nodes.push(
-        <ForceGraphNode key={i} node={{ id: i }} fill="black" />
-      );
+    for (; i < this.state.data.length / 10; i++) {
+      nodes.push(<ForceGraphNode key={i} node={{ id: i }} fill="black" />);
     }
-    this.setState( 
-      {causeCount : filteredData.length,
-      nodes: nodes} );
+    this.setState({ causeCount: filteredData.length, nodes: nodes });
   }
 
   updateCause = cause => {
     var nodes = [];
     let filteredData = this.state.data.filter(d => {
-      return d.description === cause
+      return d.description === cause;
     });
     var i = 0;
-    for(; i < filteredData.length / 10; i++) {
-      nodes.push(
-        <ForceGraphNode key={i} node={{ id: i }} fill="red" />
-      );
+    for (; i < filteredData.length / 10; i++) {
+      nodes.push(<ForceGraphNode key={i} node={{ id: i }} fill="red" />);
     }
     console.log(i);
-    for(; i < this.state.data.length / 10; i++) {
-      nodes.push(
-        <ForceGraphNode key={i} node={{ id: i }} fill="black" />
-      );
+    for (; i < this.state.data.length / 10; i++) {
+      nodes.push(<ForceGraphNode key={i} node={{ id: i }} fill="black" />);
     }
-    this.setState( 
-      {cause: cause,
-      causeCount : filteredData.length, 
-      nodes: nodes} );
-  }
+    this.setState({
+      cause: cause,
+      causeCount: filteredData.length,
+      nodes: nodes
+    });
+  };
 
   render() {
     return (
       <div>
-        <label> 
-          {this.state.causeCount} out of {this.state.data.length} outages due to {this.state.cause} in the last 15 years.
+        <label>
+          {this.state.causeCount} out of {this.state.data.length} outages due to{" "}
+          {this.state.cause} in the last 15 years.
         </label>
         <DropDownMenu
           header="Select a cause"
           causes={this.state.causes}
           updateCause={this.updateCause}
         />
-        <ForceGraph simulationOptions={{ height: this.state.height, 
-          width: this.state.width,
-          animate: true }}>
+        <ForceGraph
+          simulationOptions={{
+            height: this.state.height,
+            width: this.state.width,
+            animate: true
+          }}
+        >
           {this.state.nodes}
         </ForceGraph>
       </div>
