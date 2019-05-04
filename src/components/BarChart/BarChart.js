@@ -1,53 +1,65 @@
 import React, { Component } from "react";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import Utils from "../../utils/Utils";
 
-export default class LineChart extends Component {
+export default class BarChart extends Component {
   state = {
-    years: [],
+    times: [],
     sums: []
   };
 
   componentDidMount() {
-    // create a list of all the years
-    let years = Utils.getUniqueListFromKey(this.props.data, "year");
-    years.reverse();
+    const { data } = this.props;
 
-    // create a list of objects for each year and their sum
+    let key = "beginTime";
+    let filteredData = Utils.filterObjectList(data, key, false);
+    filteredData.forEach(d => {
+      d[key] = Utils.cleanTime(d[key]);
+    });
+    let beginTimes = Utils.getUniqueListFromKey(filteredData, key);
+
+    // create a list of objects for each beginTime and their sum
+    // e.g. {beginTime: "09:28:00", sum: 262000}
     let sums = [];
-    this.props.data.forEach(d => {
-      let i = years.findIndex(x => x === d.year);
+    let key2 = "numCustomersAffected";
+    filteredData.forEach(d => {
+      let i = beginTimes.findIndex(x => x === d[key]);
       if (sums[i] === undefined) {
         sums[i] = {
-          year: years[i],
-          sum: +d.numCustomersAffected
+          beginTime: beginTimes[i],
+          sum: +d[key2]
         };
       } else {
-        sums[i].sum += +d.numCustomersAffected;
+        sums[i].sum += +d[key2];
       }
     });
 
-    let yearList = [];
+    // organize sums by time e.g. 1:00:00 < 12:00:00
+    let timeList = [];
     let sumList = [];
     sums.forEach(d => {
-      yearList.push(d.year);
-      sumList.push(d.sum);
+      let containsColon = d.beginTime.substring(0, 2).includes(":");
+      let time = containsColon ? d.beginTime.substring(0, 1) : d.beginTime.substring(0, 2);
+      let i = parseInt(time);
+ 
+      timeList[i] = d.beginTime;
+      sumList[i] = d.sum;
     });
 
     this.setState({
-      years: yearList,
+      times: timeList,
       sums: sumList
     });
   }
 
   render() {
-    const color = "rgba(75,192,192,0.6)";
-    const solidColor = "rgba(75,192,192,1)";
+    const color = "rgba(70, 130, 180, 0.6)";
+    const solidColor = "rgba(70, 130, 180, 1)";
     return (
       <div>
-        <Line
+        <Bar
           data={{
-            labels: this.state.years,
+            labels: this.state.times,
             datasets: [
               {
                 label: "",
@@ -87,7 +99,7 @@ export default class LineChart extends Component {
                   display: true,
                   scaleLabel: {
                     display: true,
-                    labelString: "Year",
+                    labelString: "Time",
                     fontSize: 25
                   }
                 }

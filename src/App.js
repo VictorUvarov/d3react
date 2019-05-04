@@ -8,6 +8,7 @@ import powerData from "./data/power_outages_v3.csv";
 import { csv } from "d3-request";
 import LineChart from "./components/LineChart/LineChart";
 import USMap from "./components/USMap/USMap";
+import BarChart from "./components/BarChart/BarChart";
 
 export default class App extends Component {
   state = {
@@ -50,14 +51,16 @@ export default class App extends Component {
             in the United States occur for many reasons. Analysis of the 
             causes, frequency, and the impact of power outages follows:"
           />
-          <QuestionPage title="What causes outages?" text="The 
+          <QuestionPage
+            title="What causes outages?"
+            text="The 
           simulation below shows causes of power outages and their 
           relative frequency to one another in the United States from 
           the past 15 years. From the simulation we learned that severe 
-          weather conditions cause the most power outages." />
+          weather conditions cause the most power outages."
+          />
           <VisualizationPage
-            title="What causes power outages?"
-            text="Each node represents about 10 power outages"
+            title="Each node represents about 10 power outages"
             visualization={
               <Blob data={data} screenSize={[screenWidth, screenHeight]} />
             }
@@ -67,7 +70,6 @@ export default class App extends Component {
             text="To answer this question we used an interactive pie chart that filters the data based on year. Based on that year you can see what the most common causes on power outages in the United States."
           />
           <VisualizationPage
-            title="What are the most common causes?"
             visualization={
               <PieChart
                 data={data}
@@ -91,15 +93,19 @@ export default class App extends Component {
             text="description..."
           />
           <VisualizationPage
-            title="When is it more impactful?"
-            text="visualization... bubble chart"
+            visualization={
+              <BarChart
+                data={data}
+                title="Number of People Affected for Every Hour"
+              />
+            }
           />
           <QuestionPage title="When does it happen?" text="description..." />
           <VisualizationPage
             visualization={
               <LineChart
                 data={data}
-                title="Number of people affected over time"
+                title="Number of People Affected Over Time"
               />
             }
           />
