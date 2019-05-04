@@ -89,7 +89,7 @@ export default class Blob extends Component {
         />
         <ForceGraph
           simulationOptions={{
-            height: this.state.height,
+            height: this.state.height - 250,
             width: this.state.width,
             animate: true
           }}

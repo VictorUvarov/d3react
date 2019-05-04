@@ -81,7 +81,7 @@ export default class USMap extends Component {
         onClick={this.mapHandler}
         customize={this.state.config}
         width={this.props.screenSize[0]}
-        height={this.props.screenSize[1] - 100}
+        height={this.props.screenSize[1] - 250}
         title="United States Map"
       />
     );
