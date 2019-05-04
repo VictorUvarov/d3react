@@ -19,6 +19,18 @@ export default class Utils {
       "#" + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
     );
   }
+
+  static getUniqueListFromKey(list, key) {
+    let uniqueList = [];
+    list.forEach(item => {
+      let i = uniqueList.findIndex(x => x[key] === item[key]);
+      if (i <= -1) {
+        uniqueList.push(item[key]);
+      }
+    });
+    uniqueList = [...new Set(uniqueList)];
+    return uniqueList;
+  }
   /*
     For each data element in power outage data
     match the config name with the power outage geographic area

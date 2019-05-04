@@ -20,15 +20,7 @@ export default class PieChart extends Component {
       true
     );
 
-    // get the unique list of years
-    let years = [];
-    filteredData.forEach(item => {
-      let i = years.findIndex(x => x.year === item.year);
-      if (i <= -1) {
-        years.push(item.year);
-      }
-    });
-    years = [...new Set(years)];
+    let years = Utils.getUniqueListFromKey(filteredData, "year");
 
     this.state = {
       data: filteredData,
@@ -70,7 +62,6 @@ export default class PieChart extends Component {
     let values = [];
     let colors = [];
     unique.forEach(d => {
-      console.log(d);
       labels.push(d.description);
       values.push(parseInt(d.numCustomersAffected));
       colors.push(Utils.getRandomColor());
@@ -87,15 +78,12 @@ export default class PieChart extends Component {
       ]
     };
 
-    if (data === null) {
-      return <div>loading...</div>;
-    }
-
     return (
       <div>
         <DropDownButton
           header="Select a Year"
           years={this.state.years}
+          year={this.state.year}
           updateYear={this.updateYear}
         />
         <Pie

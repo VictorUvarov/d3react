@@ -55,8 +55,7 @@ export default class App extends Component {
             title="What causes power outages?"
             text="Each node represents about 10 power outages"
             visualization={
-              <Blob data={data} 
-              screenSize={[screenWidth, screenHeight]} />
+              <Blob data={data} screenSize={[screenWidth, screenHeight]} />
             }
           />
           <QuestionPage

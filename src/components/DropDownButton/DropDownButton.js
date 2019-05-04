@@ -7,13 +7,9 @@ import {
 } from "reactstrap";
 
 export default class DropDownButton extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dropdownOpen: false,
-      year: props.years[0]
-    };
-  }
+  state = {
+    dropdownOpen: false
+  };
 
   toggle = () => {
     this.setState(prevState => ({
@@ -24,18 +20,12 @@ export default class DropDownButton extends Component {
   render() {
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-        <DropdownToggle caret>{this.state.year}</DropdownToggle>
+        <DropdownToggle caret>{this.props.year}</DropdownToggle>
         <DropdownMenu>
           <DropdownItem header>{this.props.header}</DropdownItem>
           <DropdownItem divider />
           {this.props.years.map((year, idx) => (
-            <DropdownItem
-              key={idx}
-              onClick={() => {
-                this.props.updateYear(year);
-                this.setState({year: year});
-              }}
-            >
+            <DropdownItem key={idx} onClick={() => this.props.updateYear(year)}>
               {year}
             </DropdownItem>
           ))}
