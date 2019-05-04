@@ -31,6 +31,30 @@ export default class PieChart extends Component {
     };
   }
 
+  creatChartConfig(labels, values, colors) {
+    return {
+      labels: labels,
+      datasets: [
+        {
+          data: values,
+          backgroundColor: colors
+        }
+      ]
+    };
+  }
+
+  formatChartData(unique) {
+    let labels = [];
+    let values = [];
+    let colors = [];
+    unique.forEach(d => {
+      labels.push(d.description);
+      values.push(parseInt(d.numCustomersAffected));
+      colors.push(Utils.getRandomColor());
+    });
+    return { labels, values, colors };
+  }
+
   updateYear = year => {
     this.setState({ year: year });
   };
@@ -44,39 +68,14 @@ export default class PieChart extends Component {
     });
 
     // remove duplicate descriptions, since pie chart categories are descriptions
-    let unique = [];
-    filteredData.forEach(item => {
-      let i = unique.findIndex(x => x.description === item.description);
-      if (i <= -1) {
-        unique.push({
-          year: item.year,
-          description: item.description,
-          numCustomersAffected: item.numCustomersAffected
-        });
-      }
-    });
+    let unique = this.removeDuplicates(filteredData);
 
     // since chart.js needs a special format for chart data
     // split the unique data so that it can be added to chart data
-    let labels = [];
-    let values = [];
-    let colors = [];
-    unique.forEach(d => {
-      labels.push(d.description);
-      values.push(parseInt(d.numCustomersAffected));
-      colors.push(Utils.getRandomColor());
-    });
+    let { labels, values, colors } = this.formatChartData(unique);
 
     // chart.js data format
-    let chartData = {
-      labels: labels,
-      datasets: [
-        {
-          data: values,
-          backgroundColor: colors
-        }
-      ]
-    };
+    let chartData = this.creatChartConfig(labels, values, colors);
 
     return (
       <div>
@@ -110,5 +109,20 @@ export default class PieChart extends Component {
         />
       </div>
     );
+  }
+
+  removeDuplicates(filteredData) {
+    let unique = [];
+    filteredData.forEach(item => {
+      let i = unique.findIndex(x => x.description === item.description);
+      if (i <= -1) {
+        unique.push({
+          year: item.year,
+          description: item.description,
+          numCustomersAffected: item.numCustomersAffected
+        });
+      }
+    });
+    return unique;
   }
 }

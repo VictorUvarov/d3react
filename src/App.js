@@ -10,14 +10,11 @@ import LineChart from "./components/LineChart/LineChart";
 import USMap from "./components/USMap/USMap";
 
 export default class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      screenWidth: 1920,
-      screenHeight: 1080,
-      data: null
-    };
-  }
+  state = {
+    screenWidth: 1920,
+    screenHeight: 1080,
+    data: null
+  };
 
   async componentDidMount() {
     window.addEventListener("resize", this.onResize, false);
