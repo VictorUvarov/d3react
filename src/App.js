@@ -43,11 +43,18 @@ export default class App extends Component {
         <div>
           <Page
             title="Power outages in the United States"
-            text="Power outages occur for many reasons.
-            We are focusing on the United States power outage data.
-            We want to analyzed the causes, frequency, impactfulness, and when do they happen"
+            text="We currently live in a time where electronics become
+            more and more integral in our daily lives. As a result, the 
+            demand for power increases and events like power outages are 
+            becoming more and more concerning. Power outages 
+            in the United States occur for many reasons. Analysis of the 
+            causes, frequency, and the impact of power outages follows:"
           />
-          <QuestionPage title="What causes outages?" text="description..." />
+          <QuestionPage title="What causes outages?" text="The 
+          simulation below shows causes of power outages and their 
+          relative frequency to one another in the United States from 
+          the past 15 years. From the simulation we learned that severe 
+          weather conditions cause the most power outages." />
           <VisualizationPage
             title="What causes power outages?"
             text="Each node represents about 10 power outages"
@@ -57,7 +64,7 @@ export default class App extends Component {
           />
           <QuestionPage
             title="What are the most common causes?"
-            text="description..."
+            text="To answer this question we used an interactive pie chart that filters the data based on year. Based on that year you can see what the most common causes on power outages in the United States."
           />
           <VisualizationPage
             title="What are the most common causes?"
@@ -71,7 +78,7 @@ export default class App extends Component {
           />
           <QuestionPage
             title="Where is it more common?"
-            text="description..."
+            text="To answer this question we used a chloropleth map to show the which states experience power outages more frequently. <Havent decided if map is dynamic or static yet so further explanation will added after the map is done> "
           />
           <VisualizationPage
             title="Where is it more common?"
@@ -98,16 +105,7 @@ export default class App extends Component {
           />
           <Page
             title="Conclusion"
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            Sed consectetur ac lacus nec vulputate. Fusce felis mauris, 
-            vehicula laoreet fermentum eu, congue a velit. Praesent maximus 
-            mi est, in pharetra eros pellentesque id. Morbi placerat turpis 
-            eu augue varius vestibulum. Phasellus ut odio sed dolor volutpat 
-            semper quis a tellus. Vivamus lobortis tempus ipsum imperdiet 
-            auctor. Aenean bibendum, magna sit amet tincidunt efficitur, 
-            ante nulla accumsan risus, eu feugiat augue urna et ex. Sed nec 
-            bibendum massa, sed volutpat ante. Nunc eu consequat augue. Morbi 
-            fermentum iaculis lorem vitae egestas. Sed varius eu erat in iaculis."
+            text="Through the use of both static and interactive visualizations we were able to take a data set that truly intrested us and explored the different ways to represent the answers we found. Some key insights we found from the data set include; that roughly half of the power outages in the last fifteen years have been caused by severe weather conditions, that people in 2014 who experienced power outages mainly had been caused by system failures, and that New Mexico, Oklahoma, and Kansas experience power outages  more frequently than the rest of the United States."
           />
         </div>
       </div>
