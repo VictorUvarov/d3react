@@ -73,9 +73,7 @@ export default class PieChart extends Component {
       console.log(d);
       labels.push(d.description);
       values.push(parseInt(d.numCustomersAffected));
-      colors.push(
-        "#" + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
-      );
+      colors.push(Utils.getRandomColor());
     });
 
     // chart.js data format

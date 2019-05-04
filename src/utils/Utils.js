@@ -1,7 +1,7 @@
 export default class Utils {
   static filterObjectList(list, key, keyIsNum) {
     let filteredList = list.filter(d => {
-      return keyIsNum ? d[key] !== "" || +d[key] !== 0 : d[key] !== "";
+      return keyIsNum ? d[key] !== "" && +d[key] !== 0.0 : d[key] !== "";
     });
     return filteredList;
   }
@@ -12,6 +12,12 @@ export default class Utils {
       isKeyNum === true ? l.push(+element[key]) : l.push(element[key]);
     });
     return l;
+  }
+
+  static getRandomColor() {
+    return (
+      "#" + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
+    );
   }
   /*
     For each data element in power outage data
