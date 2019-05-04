@@ -55,6 +55,43 @@ export default class PieChart extends Component {
     return { labels, values, colors };
   }
 
+  getChartOptions() {
+    return {
+      title: {
+        display: this.props.displayTitle,
+        text: this.props.title + " (" + this.state.year + ")",
+        fontSize: 25
+      },
+      legend: {
+        display: this.props.displayLegend,
+        position: this.props.legendPosition
+      },
+      layout: {
+        padding: {
+          left: 0,
+          right: 50,
+          bottom: 50,
+          top: 0
+        }
+      }
+    };
+  }
+
+  removeDuplicates(filteredData) {
+    let unique = [];
+    filteredData.forEach(item => {
+      let i = unique.findIndex(x => x.description === item.description);
+      if (i <= -1) {
+        unique.push({
+          year: item.year,
+          description: item.description,
+          numCustomersAffected: item.numCustomersAffected
+        });
+      }
+    });
+    return unique;
+  }
+
   updateYear = year => {
     this.setState({ year: year });
   };
@@ -85,44 +122,8 @@ export default class PieChart extends Component {
           year={this.state.year}
           updateYear={this.updateYear}
         />
-        <Pie
-          data={chartData}
-          options={{
-            title: {
-              display: this.props.displayTitle,
-              text: this.props.title + " (" + this.state.year + ")",
-              fontSize: 25
-            },
-            legend: {
-              display: this.props.displayLegend,
-              position: this.props.legendPosition
-            },
-            layout: {
-              padding: {
-                left: 0,
-                right: 50,
-                bottom: 50,
-                top: 0
-              }
-            }
-          }}
-        />
+        <Pie data={chartData} options={this.getChartOptions()} />
       </div>
     );
-  }
-
-  removeDuplicates(filteredData) {
-    let unique = [];
-    filteredData.forEach(item => {
-      let i = unique.findIndex(x => x.description === item.description);
-      if (i <= -1) {
-        unique.push({
-          year: item.year,
-          description: item.description,
-          numCustomersAffected: item.numCustomersAffected
-        });
-      }
-    });
-    return unique;
   }
 }
