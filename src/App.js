@@ -10,14 +10,11 @@ import LineChart from "./components/LineChart/LineChart";
 import USMap from "./components/USMap/USMap";
 
 export default class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      screenWidth: 1920,
-      screenHeight: 1080,
-      data: null
-    };
-  }
+  state = {
+    screenWidth: 1920,
+    screenHeight: 1080,
+    data: null
+  };
 
   async componentDidMount() {
     window.addEventListener("resize", this.onResize, false);
@@ -55,8 +52,7 @@ export default class App extends Component {
             title="What causes power outages?"
             text="Each node represents about 10 power outages"
             visualization={
-              <Blob data={data} 
-              screenSize={[screenWidth, screenHeight]} />
+              <Blob data={data} screenSize={[screenWidth, screenHeight]} />
             }
           />
           <QuestionPage
