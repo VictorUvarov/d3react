@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import USAMap from "react-usa-map";
 import stateCodes from "../../data/states_hash.json";
 import Utils from "../../utils/Utils";
-import { scaleLinear } from "d3-scale";
+import { scaleLinear } from "d3";
 import "./USMap.css";
 
 export default class USMap extends Component {

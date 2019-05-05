@@ -4,7 +4,7 @@ import QuestionPage from "./components/QuestionPage/QuestionPage";
 import PieChart from "./components/PieChart/PieChart";
 import Blob from "./components/Blob/Blob";
 import Page from "./components/Page/Page";
-import powerData from "./data/power_outages_v3.csv";
+import powerData from "./data/power_outages.csv";
 import { csv } from "d3-request";
 import LineChart from "./components/LineChart/LineChart";
 import USMap from "./components/USMap/USMap";
