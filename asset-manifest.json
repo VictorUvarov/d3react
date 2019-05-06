@@ -1,16 +1,17 @@
 {
-  "main.css": "/d3react/static/css/main.5c5f455d.chunk.css",
-  "main.js": "/d3react/static/js/main.d73379fd.chunk.js",
-  "main.js.map": "/d3react/static/js/main.d73379fd.chunk.js.map",
+  "main.css": "/d3react/static/css/main.d4f8ae53.chunk.css",
+  "main.js": "/d3react/static/js/main.95916f0a.chunk.js",
+  "main.js.map": "/d3react/static/js/main.95916f0a.chunk.js.map",
   "runtime~main.js": "/d3react/static/js/runtime~main.f87e45fc.js",
   "runtime~main.js.map": "/d3react/static/js/runtime~main.f87e45fc.js.map",
   "static/css/2.005dd1a5.chunk.css": "/d3react/static/css/2.005dd1a5.chunk.css",
-  "static/js/2.d71c554f.chunk.js": "/d3react/static/js/2.d71c554f.chunk.js",
-  "static/js/2.d71c554f.chunk.js.map": "/d3react/static/js/2.d71c554f.chunk.js.map",
+  "static/js/2.efd2672a.chunk.js": "/d3react/static/js/2.efd2672a.chunk.js",
+  "static/js/2.efd2672a.chunk.js.map": "/d3react/static/js/2.efd2672a.chunk.js.map",
   "index.html": "/d3react/index.html",
-  "precache-manifest.9c3fab81ef25e0eea567ac877cf18219.js": "/d3react/precache-manifest.9c3fab81ef25e0eea567ac877cf18219.js",
+  "precache-manifest.e86c9994ecc28af50f2badbc8628861e.js": "/d3react/precache-manifest.e86c9994ecc28af50f2badbc8628861e.js",
   "service-worker.js": "/d3react/service-worker.js",
   "static/css/2.005dd1a5.chunk.css.map": "/d3react/static/css/2.005dd1a5.chunk.css.map",
-  "static/css/main.5c5f455d.chunk.css.map": "/d3react/static/css/main.5c5f455d.chunk.css.map",
-  "static/media/power_outages_v3.csv": "/d3react/static/media/power_outages_v3.b012b964.csv"
+  "static/css/main.d4f8ae53.chunk.css.map": "/d3react/static/css/main.d4f8ae53.chunk.css.map",
+  "static/media/Page.css": "/d3react/static/media/earth.671e71e5.jpg",
+  "static/media/power_outages.csv": "/d3react/static/media/power_outages.b012b964.csv"
 }
