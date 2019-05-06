@@ -1,33 +1,31 @@
 .landing-root {
   background: #0f2027; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #2c5364,
-    #203a43,
-    #0f2027
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #2c5364,
-    #203a43,
-    #0f2027
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-image: url("../../assets/earth.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   height: 100vh;
   text-align: center;
   color: white;
-  padding-top: 50px;
+  padding: 250px 100px 0 100px;
 }
 
 .landing-text {
   font-size: 1.5rem;
   line-height: 3rem;
-  margin: 50px;
+  padding: 50px;
 }
 
 @media only screen and (max-width: 992px) {
   .landing-text {
     font-size: 1rem;
     line-height: 2rem;
-    margin: 50px;
+    padding: 25px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .landing-root  {
+    padding: 40px 25px 0 25px;
   }
 }

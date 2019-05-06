@@ -20,6 +20,14 @@ export default class Utils {
     );
   }
 
+  static cleanTime(timeString) {
+    // 012345678 [index]
+    // 13:34:00\0 [value]
+    let hr = timeString.substring(0, 2);
+
+    return parseInt(hr) % 24 + ":00:00";
+  }
+
   static getUniqueListFromKey(list, key) {
     let uniqueList = [];
     list.forEach(item => {

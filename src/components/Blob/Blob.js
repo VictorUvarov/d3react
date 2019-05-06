@@ -12,15 +12,7 @@ export default class Blob extends Component {
       "numCustomersAffected",
       true
     );
-    let causes = [];
-
-    filteredData.forEach(item => {
-      let i = causes.findIndex(x => x.description === item.description);
-      if (i <= -1) {
-        causes.push(item.description);
-      }
-    });
-    causes = [...new Set(causes)];
+    let causes = Utils.getUniqueListFromKey(filteredData, "description");
 
     this.state = {
       data: props.data,
@@ -89,7 +81,7 @@ export default class Blob extends Component {
         />
         <ForceGraph
           simulationOptions={{
-            height: this.state.height,
+            height: this.state.height - 250,
             width: this.state.width,
             animate: true
           }}

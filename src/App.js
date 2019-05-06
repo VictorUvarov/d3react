@@ -4,10 +4,12 @@ import QuestionPage from "./components/QuestionPage/QuestionPage";
 import PieChart from "./components/PieChart/PieChart";
 import Blob from "./components/Blob/Blob";
 import Page from "./components/Page/Page";
-import powerData from "./data/power_outages_v3.csv";
+import powerData from "./data/power_outages.csv";
 import { csv } from "d3-request";
 import LineChart from "./components/LineChart/LineChart";
 import USMap from "./components/USMap/USMap";
+import BarChart from "./components/BarChart/BarChart";
+import "./utils/scroll";
 
 export default class App extends Component {
   state = {
@@ -42,6 +44,8 @@ export default class App extends Component {
       <div className="App">
         <div>
           <Page
+            id="home-page"
+            jumpTarget="#question-page-1"
             title="Power outages in the United States"
             text="We currently live in a time where electronics become
             more and more integral in our daily lives. As a result, the 
@@ -50,24 +54,35 @@ export default class App extends Component {
             in the United States occur for many reasons. Analysis of the 
             causes, frequency, and the impact of power outages follows:"
           />
-          <QuestionPage title="What causes outages?" text="The 
-          simulation below shows causes of power outages and their 
-          relative frequency to one another in the United States from 
-          the past 15 years. From the simulation we learned that severe 
-          weather conditions cause the most power outages." />
+          <QuestionPage
+            id="question-page-1"
+            jumpTarget="#vis-page-1"
+            title="What causes outages?"
+            text="The simulation below shows causes of power outages and their 
+            relative frequency to one another in the United States from 
+            the past 15 years. From the simulation we learned that severe 
+            weather conditions cause the most power outages."
+          />
           <VisualizationPage
-            title="What causes power outages?"
-            text="Each node represents about 10 power outages"
+            id="vis-page-1"
+            jumpTarget="#question-page-2"
+            title="Each node represents about 10 power outages"
             visualization={
               <Blob data={data} screenSize={[screenWidth, screenHeight]} />
             }
           />
           <QuestionPage
+            id="question-page-2"
+            jumpTarget="#vis-page-2"
             title="What are the most common causes?"
-            text="To answer this question we used an interactive pie chart that filters the data based on year. Based on that year you can see what the most common causes on power outages in the United States."
+            text="To answer this question we used an interactive pie chart 
+            that filters the data based on year. Based on that year you can
+            see what the most common causes on power outages in the United 
+            States."
           />
           <VisualizationPage
-            title="What are the most common causes?"
+            id="vis-page-2"
+            jumpTarget="#question-page-3"
             visualization={
               <PieChart
                 data={data}
@@ -77,35 +92,69 @@ export default class App extends Component {
             }
           />
           <QuestionPage
+            id="question-page-3"
+            jumpTarget="#vis-page-3"
             title="Where is it more common?"
-            text="To answer this question we used a chloropleth map to show the which states experience power outages more frequently. <Havent decided if map is dynamic or static yet so further explanation will added after the map is done> "
+            text="To answer this question we used a chloropleth map to show
+            which states experience power outages more frequently.
+            The darker the color of the state the more people were affected."
           />
           <VisualizationPage
-            title="Where is it more common?"
+            id="vis-page-3"
+            jumpTarget="#question-page-4"
+            title="Amount of Customers Affected in the United States"
             visualization={
               <USMap data={data} screenSize={[screenWidth, screenHeight]} />
             }
           />
           <QuestionPage
+            id="question-page-4"
+            jumpTarget="#vis-page-4"
             title="When is it more impactful?"
-            text="description..."
+            text="The most common hours of the day are between 3:00pm - 6:00pm"
           />
           <VisualizationPage
-            title="When is it more impactful?"
-            text="visualization... bubble chart"
+            id="vis-page-4"
+            jumpTarget="#question-page-5"
+            visualization={
+              <BarChart
+                data={data}
+                title="Number of People Affected for Every Hour"
+              />
+            }
           />
-          <QuestionPage title="When does it happen?" text="description..." />
+          <QuestionPage
+            id="question-page-5"
+            jumpTarget="#vis-page-5"
+            title="When does it happen?"
+            text="The number of people has been slowly going up past 14 years.
+            The highest occurances were in 2008, 2011 and 2012.
+            After massive spikes in power outages their are very low dips in 
+            the following years."
+          />
           <VisualizationPage
+            id="vis-page-5"
+            jumpTarget="#conclusion-page"
             visualization={
               <LineChart
                 data={data}
-                title="Number of people affected over time"
+                title="Number of People Affected Over Time"
               />
             }
           />
           <Page
+            id="conclusion-page"
+            jumpTarget="#home-page"
             title="Conclusion"
-            text="Through the use of both static and interactive visualizations we were able to take a data set that truly intrested us and explored the different ways to represent the answers we found. Some key insights we found from the data set include; that roughly half of the power outages in the last fifteen years have been caused by severe weather conditions, that people in 2014 who experienced power outages mainly had been caused by system failures, and that New Mexico, Oklahoma, and Kansas experience power outages  more frequently than the rest of the United States."
+            text="Through the use of both static and interactive visualizations 
+            we were able to take a data set that truly intrested us and explored 
+            the different ways to represent the answers we found. Some key 
+            insights we found from the data set include; that roughly half of 
+            the power outages in the last fifteen years have been caused by 
+            severe weather conditions, that people in 2014 who experienced 
+            power outages mainly had been caused by system failures, and 
+            that New Mexico, Oklahoma, and Kansas experience power outages
+            more frequently than the rest of the United States."
           />
         </div>
       </div>

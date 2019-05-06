@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import USAMap from "react-usa-map";
 import stateCodes from "../../data/states_hash.json";
 import Utils from "../../utils/Utils";
-import { scaleLinear } from "d3-scale";
+import { scaleLinear } from "d3";
 import "./USMap.css";
 
 export default class USMap extends Component {
@@ -68,8 +68,11 @@ export default class USMap extends Component {
 
   mapHandler = event => {
     this.setState({ title: event.target.dataset.name });
-    console.log(event.target.dataset.name);
   };
+
+  componentWillUpdate() {
+    console.log(this.state.title);
+  }
 
   statesCustomConfig = () => {
     return this.state.config;
@@ -81,7 +84,7 @@ export default class USMap extends Component {
         onClick={this.mapHandler}
         customize={this.state.config}
         width={this.props.screenSize[0]}
-        height={this.props.screenSize[1] - 100}
+        height={this.props.screenSize[1] - 250}
         title="United States Map"
       />
     );
