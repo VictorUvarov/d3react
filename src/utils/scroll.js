@@ -26,22 +26,22 @@ function checkKey(e) {
     // up arrow
     i--;
     i %= pageIDs.length;
-    jump(pageIDs[i], { duration: 1000 });
+    jump(pageIDs[i]);
   } else if (e.keyCode === 40) {
     // down arrow
-    console.log(e.keyCode)
+    console.log(e.keyCode);
     i++;
     i %= pageIDs.length;
-    jump(pageIDs[i], { duration: 1000 });
+    jump(pageIDs[i]);
   } else if (e.keyCode === 37) {
     // left arrow
     i--;
     i %= pageIDs.length;
-    jump(pageIDs[i], { duration: 1000 });
+    jump(pageIDs[i]);
   } else if (e.keyCode === 39) {
     // right arrow
     i++;
     i %= pageIDs.length;
-    jump(pageIDs[i], { duration: 1000 });
+    jump(pageIDs[i]);
   }
 }
