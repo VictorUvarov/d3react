@@ -31,7 +31,7 @@ export default class LineChart extends Component {
     let sumList = [];
     sums.forEach(d => {
       yearList.push(d.year);
-      sumList.push(d.sum);
+      sumList.push(d.sum / 1000000);
     });
 
     this.setState({
@@ -88,7 +88,7 @@ export default class LineChart extends Component {
                   scaleLabel: {
                     display: true,
                     labelString: "Year",
-                    fontSize: 25
+                    fontSize: 20
                   }
                 }
               ],
@@ -97,8 +97,8 @@ export default class LineChart extends Component {
                   display: true,
                   scaleLabel: {
                     display: true,
-                    labelString: "Number of customers affected",
-                    fontSize: 25
+                    labelString: "Number of customers affected (millions)",
+                    fontSize: 20
                   },
                   gridLines: {
                     display: true
