@@ -1,0 +1,19 @@
+.legend {
+  position: absolute;
+  left: 800px;
+  top: 350px;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  min-width: 60px;
+  height: 28px;
+  padding: 4px;
+  font: 12px sans-serif;
+  background: rgb(36, 34, 34);
+  color: white;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
