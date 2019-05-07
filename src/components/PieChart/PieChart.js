@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Pie } from "react-chartjs-2";
-import DropDownButton from "./../DropDownButton/DropDownButton";
 import Utils from "../../utils/Utils";
+import Buttons from "../Buttons/Buttons";
 
 export default class PieChart extends Component {
   static defaultProps = {
@@ -97,7 +97,7 @@ export default class PieChart extends Component {
   };
 
   render() {
-    const { data } = this.state;
+    const { data, years } = this.state;
 
     // filter data based on current year
     let filteredData = data.filter(d => {
@@ -116,12 +116,7 @@ export default class PieChart extends Component {
 
     return (
       <div>
-        <DropDownButton
-          header="Select a Year"
-          years={this.state.years}
-          year={this.state.year}
-          updateYear={this.updateYear}
-        />
+        <Buttons onClick={this.updateYear} values={years} />
         <Pie data={chartData} options={this.getChartOptions()} />
       </div>
     );
