@@ -39,10 +39,12 @@ export default class BarChart extends Component {
     let sumList = [];
     sums.forEach(d => {
       let containsColon = d.beginTime.substring(0, 2).includes(":");
-      let time = containsColon ? d.beginTime.substring(0, 1) : d.beginTime.substring(0, 2);
+      let time = containsColon
+        ? d.beginTime.substring(0, 1)
+        : d.beginTime.substring(0, 2);
       let i = parseInt(time);
- 
-      timeList[i] = d.beginTime;
+
+      timeList[i] = this.convertMilitaryToStandard(d.beginTime);
       sumList[i] = d.sum;
     });
 
@@ -50,6 +52,32 @@ export default class BarChart extends Component {
       times: timeList,
       sums: sumList
     });
+  }
+
+  convertMilitaryToStandard(time) {
+    time = time.split(":"); // convert to array
+
+    // fetch
+    var hours = Number(time[0]);
+    var minutes = Number(time[1]);
+    var seconds = Number(time[2]);
+
+    // calculate
+    var timeValue;
+
+    if (hours > 0 && hours <= 12) {
+      timeValue = "" + hours;
+    } else if (hours > 12) {
+      timeValue = "" + (hours - 12);
+    } else if (hours === 0) {
+      timeValue = "12";
+    }
+
+    timeValue += minutes < 10 ? ":0" + minutes : ":" + minutes; // get minutes
+    timeValue += seconds < 10 ? ":0" + seconds : ":" + seconds; // get seconds
+    timeValue += hours >= 12 ? " P.M." : " A.M."; // get AM/PM
+
+    return timeValue;
   }
 
   render() {
