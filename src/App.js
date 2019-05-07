@@ -52,15 +52,15 @@ export default class App extends Component {
             demand for power increases and events like power outages are 
             becoming more and more concerning. Power outages 
             in the United States occur for many reasons. Analysis of the 
-            causes, frequency, and the impact of power outages follows:"
+            causes, frequency, and the impact of power outages follows..."
           />
           <QuestionPage
             id="question-page-1"
             jumpTarget="#vis-page-1"
             title="What causes outages?"
-            text="The simulation below shows causes of power outages and their 
+            text="The simulation below shows the causes of power outages and their 
             relative frequency to one another in the United States from 
-            the past 15 years. From the simulation we learned that severe 
+            2000-2014. From the simulation we learned that severe 
             weather conditions cause the most power outages."
           />
           <VisualizationPage
@@ -111,7 +111,8 @@ export default class App extends Component {
             id="question-page-4"
             jumpTarget="#vis-page-4"
             title="When is it more impactful?"
-            text="The most common hours of the day are between 3:00pm - 6:00pm"
+            text="Looking at the bar graph below we can conclude that the most common hours
+            of the day when people experience power outages are between 3:00pm - 6:00pm"
           />
           <VisualizationPage
             id="vis-page-4"
@@ -126,11 +127,10 @@ export default class App extends Component {
           <QuestionPage
             id="question-page-5"
             jumpTarget="#vis-page-5"
-            title="When does it happen?"
-            text="The number of people has been slowly going up past 14 years.
-            The highest occurances were in 2008, 2011 and 2012.
-            After massive spikes in power outages their are very low dips in 
-            the following years."
+            title="When is it more impactful?"
+            text="By looking at the line graph below we can answer when power outages are more impactful based on year.
+            The years 2008, 2011, and 2012 had the highest incidences of power outages in the last 15 years of our data set range."
+
           />
           <VisualizationPage
             id="vis-page-5"
