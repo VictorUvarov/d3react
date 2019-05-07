@@ -45,7 +45,7 @@ export default class BarChart extends Component {
       let i = parseInt(time);
 
       timeList[i] = this.convertMilitaryToStandard(d.beginTime);
-      sumList[i] = d.sum;
+      sumList[i] = d.sum / 1000000;
     });
 
     this.setState({
@@ -128,7 +128,7 @@ export default class BarChart extends Component {
                   scaleLabel: {
                     display: true,
                     labelString: "Time",
-                    fontSize: 25
+                    fontSize: 20
                   }
                 }
               ],
@@ -137,8 +137,8 @@ export default class BarChart extends Component {
                   display: true,
                   scaleLabel: {
                     display: true,
-                    labelString: "Number of customers affected",
-                    fontSize: 25
+                    labelString: "Number of customers affected (millions)",
+                    fontSize: 20
                   },
                   gridLines: {
                     display: true
