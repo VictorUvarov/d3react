@@ -3,6 +3,7 @@ import mapData from "../../data/states.json";
 import { feature } from "topojson";
 import Utils from "../../utils/Utils";
 import stateHashes from "../../data/states_hash.json";
+import { legendColor } from "d3-svg-legend";
 import * as d3 from "d3";
 import "./USAMap.css";
 
@@ -44,6 +45,7 @@ export default class USAMap extends Component {
     const colorScale = this.getColorScale(min, max);
 
     this.drawMap(stateSumList, colorScale);
+    this.drawLegend(max, min);
   }
 
   componentDidUpdate() {
@@ -93,7 +95,6 @@ export default class USAMap extends Component {
         stateSumList.forEach(d => {
           if (d.name.includes(stateName)) value = d.value;
         });
-        console.log(value);
         return colorScale(value);
       })
       .attr("stroke", "#fff")
@@ -131,6 +132,31 @@ export default class USAMap extends Component {
       });
   }
 
+  drawLegend(max, min) {
+    const startColor = "#e3e3e3";
+    const endColor = "#ff0000";
+
+    var linear = d3
+      .scaleLinear()
+      .domain([0, max / 1000000])
+      .range([startColor, endColor]);
+
+    var svg = d3.select(this.node);
+
+    svg
+      .append("g")
+      .attr("class", "legendLinear")
+      .attr("transform", "translate(680,5)");
+
+    var legendLinear = legendColor()
+      .shapeWidth(35)
+      .cells(10)
+      .orient("horizontal")
+      .scale(linear);
+
+    svg.select(".legendLinear").call(legendLinear);
+  }
+
   render() {
     const { width, height } = this.props;
     return (
@@ -140,6 +166,7 @@ export default class USAMap extends Component {
         height={height}
         viewBox="0 0 960 600"
         style={{ width: "100%", height: "auto" }}
+        className="USAMap"
       />
     );
   }
