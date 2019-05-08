@@ -99,7 +99,13 @@ export default class App extends Component {
             which states experience power outages more frequently.
             The darker the color of the state the more people were affected."
           />
-          <USAMap data={data} width={screenWidth} height={screenHeight} />
+          <VisualizationPage
+            id="vis-page-3"
+            jumpTarget="#question-page-4"
+            visualization={
+              <USAMap data={data} width={screenWidth} height={screenHeight} />
+            }
+          />
           <QuestionPage
             id="question-page-4"
             jumpTarget="#vis-page-4"
