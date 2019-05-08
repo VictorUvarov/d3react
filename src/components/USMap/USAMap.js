@@ -135,26 +135,25 @@ export default class USAMap extends Component {
   drawLegend(max, min) {
     const startColor = "#e3e3e3";
     const endColor = "#ff0000";
+    const { width, height } = this.props;
 
-    var linear = d3
+    const log = d3
       .scaleLinear()
-      .domain([0, max / 1000000])
+      .domain([0, max])
       .range([startColor, endColor]);
 
-    var svg = d3.select(this.node);
+    const svg = d3.select(this.node);
 
     svg
       .append("g")
       .attr("class", "legendLinear")
-      .attr("transform", "translate(680,5)");
+      .attr("transform", `translate(${width / 2.1},${height / 2.5})`);
 
-    var legendLinear = legendColor()
-      .shapeWidth(35)
-      .cells(10)
-      .orient("horizontal")
-      .scale(linear);
+    const logLegend = legendColor()
+      .cells(8)
+      .scale(log);
 
-    svg.select(".legendLinear").call(legendLinear);
+    svg.select(".legendLinear").call(logLegend);
   }
 
   render() {
