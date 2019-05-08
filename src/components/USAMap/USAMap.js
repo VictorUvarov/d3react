@@ -45,7 +45,7 @@ export default class USAMap extends Component {
     const colorScale = this.getColorScale(min, max);
 
     this.drawMap(stateSumList, colorScale);
-    this.drawLegend(max, min);
+    // this.drawLegend(max, min);
   }
 
   componentDidUpdate() {
@@ -132,29 +132,29 @@ export default class USAMap extends Component {
       });
   }
 
-  drawLegend(max, min) {
-    const startColor = "#e3e3e3";
-    const endColor = "#ff0000";
-    const { width, height } = this.props;
+  // drawLegend(max, min) {
+  //   const startColor = "#e3e3e3";
+  //   const endColor = "#ff0000";
+  //   const { width, height } = this.props;
 
-    const log = d3
-      .scaleLinear()
-      .domain([0, max])
-      .range([startColor, endColor]);
+  //   const log = d3
+  //     .scaleLinear()
+  //     .domain([0, max])
+  //     .range([startColor, endColor]);
 
-    const svg = d3.select(this.node);
+  //   const svg = d3.select(this.node);
 
-    svg
-      .append("g")
-      .attr("class", "legendLinear")
-      .attr("transform", `translate(${width / 2.1},${height / 2.5})`);
+  //   svg
+  //     .append("g")
+  //     .attr("class", "legendLinear")
+  //     .attr("transform", `translate(${width / 1.7},${height / 2.1})`);
 
-    const logLegend = legendColor()
-      .cells(8)
-      .scale(log);
+  //   const logLegend = legendColor()
+  //     .cells(8)
+  //     .scale(log);
 
-    svg.select(".legendLinear").call(logLegend);
-  }
+  //   svg.select(".legendLinear").call(logLegend);
+  // }
 
   render() {
     const { width, height } = this.props;

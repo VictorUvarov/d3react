@@ -9,7 +9,7 @@ import { csv } from "d3-request";
 import LineChart from "./components/LineChart/LineChart";
 import BarChart from "./components/BarChart/BarChart";
 import "./utils/scroll";
-import USAMap from "./components/USMap/USAMap";
+import USAMap from "./components/USAMap/USAMap";
 
 export default class App extends Component {
   state = {
