@@ -1,23 +1,77 @@
 import React, { Component } from "react";
 import mapData from "../../data/states.json";
 import { feature } from "topojson";
+import Utils from "../../utils/Utils";
+import stateHashes from "../../data/states_hash.json";
 import * as d3 from "d3";
 import "./USAMap.css";
 
 export default class USAMap extends Component {
   componentDidMount() {
-    console.log(this.props.data);
-    this.drawMap();
+    const { data } = this.props;
+
+    let filteredData = Utils.filterObjectList(
+      data,
+      "numCustomersAffected",
+      true
+    );
+
+    let affectedAmounts = Utils.getListFromListOfObjects(
+      filteredData,
+      "numCustomersAffected",
+      true
+    );
+
+    let max = Math.max(...affectedAmounts) * 5;
+    let min = Math.min(...affectedAmounts);
+
+    let stateSumList = [];
+    for (let key in stateHashes) {
+      const state = { name: stateHashes[key], value: 0 };
+      stateSumList.push(state);
+    }
+
+    filteredData.forEach(d => {
+      const stateName = d.geographicAreas;
+      const value = +d.numCustomersAffected;
+      stateSumList.forEach(state => {
+        if (stateName.includes(state.name)) {
+          state.value += value;
+        }
+      });
+    });
+
+    const colorScale = this.getColorScale(min, max);
+
+    this.drawMap(stateSumList, colorScale);
   }
 
   componentDidUpdate() {
     this.drawMap();
   }
 
-  drawMap() {
+  formatNumber(num) {
+    return num
+      .toString()
+      .replace(/,/g, "")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  getColorScale(min, max) {
+    const colorStart = "#e3e3e3";
+    const colorEnd = "#ff0000";
+    const colorScale = d3
+      .scaleLinear()
+      .domain([min, max])
+      .range([colorStart, colorEnd]);
+    return colorScale;
+  }
+
+  drawMap(stateSumList, colorScale) {
+    const node = this.node;
     const path = d3.geoPath();
     const states = feature(mapData, mapData.objects.states).features;
-    const svg = d3.select("svg");
+    const svg = d3.select(node);
 
     // Append Div for tooltip to SVG
     const div = d3
@@ -33,23 +87,43 @@ export default class USAMap extends Component {
       .append("path")
       .attr("class", "state")
       .attr("d", path)
-      .attr("fill", "#e3e3e3")
+      .attr("fill", function(data) {
+        const stateName = data.properties.name;
+        let value;
+        stateSumList.forEach(d => {
+          if (d.name.includes(stateName)) value = d.value;
+        });
+        console.log(value);
+        return colorScale(value);
+      })
       .attr("stroke", "#fff")
       .attr("strokeWidth", 0.5)
       .on("mouseover", function(data) {
         const stateName = data.properties.name;
-        d3.select(this).attr("fill", "#FCBC34");
+        let value;
+        stateSumList.forEach(d => {
+          if (d.name.includes(stateName)) value = d.value;
+        });
+
+        d3.select(this).attr("opacity", "0.6");
         div
           .transition()
           .duration(200)
           .style("opacity", 0.9);
         div
-          .text(stateName)
-          .style("left", d3.event.pageX + 15 + "px")
+          .text(
+            stateName +
+              ": " +
+              value
+                .toString()
+                .replace(/,/g, "")
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          )
+          .style("left", d3.event.pageX - 30 + "px")
           .style("top", d3.event.pageY + 15 + "px");
       })
       .on("mouseout", function(data) {
-        d3.select(this).attr("fill", "#e3e3e3");
+        d3.select(this).attr("opacity", "1");
         div
           .transition()
           .duration(500)
@@ -61,6 +135,7 @@ export default class USAMap extends Component {
     const { width, height } = this.props;
     return (
       <svg
+        ref={node => (this.node = node)}
         width={width}
         height={height}
         viewBox="0 0 960 600"

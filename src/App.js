@@ -7,9 +7,9 @@ import Page from "./components/Page/Page";
 import powerData from "./data/power_outages.csv";
 import { csv } from "d3-request";
 import LineChart from "./components/LineChart/LineChart";
-import USMap from "./components/USMap/USMap";
 import BarChart from "./components/BarChart/BarChart";
 import "./utils/scroll";
+import USAMap from "./components/USMap/USAMap";
 
 export default class App extends Component {
   state = {
@@ -99,14 +99,7 @@ export default class App extends Component {
             which states experience power outages more frequently.
             The darker the color of the state the more people were affected."
           />
-          <VisualizationPage
-            id="vis-page-3"
-            jumpTarget="#question-page-4"
-            title="Amount of Customers Affected in the United States"
-            visualization={
-              <USMap data={data} screenSize={[screenWidth, screenHeight]} />
-            }
-          />
+          <USAMap data={data} width={screenWidth} height={screenHeight} />
           <QuestionPage
             id="question-page-4"
             jumpTarget="#vis-page-4"
@@ -130,7 +123,6 @@ export default class App extends Component {
             title="When is it more impactful?"
             text="By looking at the line graph below we can answer when power outages are more impactful based on year.
             The years 2008, 2011, and 2012 had the highest incidences of power outages in the last 15 years of our data set range."
-
           />
           <VisualizationPage
             id="vis-page-5"
