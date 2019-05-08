@@ -46,7 +46,7 @@ export default class App extends Component {
           <Page
             id="home-page"
             jumpTarget="#question-page-1"
-            title="Power outages in the United States"
+            title="Power Outages in the United States"
             text="We currently live in a time where electronics become
             more and more integral in our daily lives. As a result, the 
             demand for power increases and events like power outages are 
@@ -57,7 +57,7 @@ export default class App extends Component {
           <QuestionPage
             id="question-page-1"
             jumpTarget="#vis-page-1"
-            title="What causes outages?"
+            title="What Causes Outages?"
             text="The simulation below shows the causes of power outages and their 
             relative frequency to one another in the United States from 
             2000-2014. From the simulation we learned that severe 
@@ -66,7 +66,7 @@ export default class App extends Component {
           <VisualizationPage
             id="vis-page-1"
             jumpTarget="#question-page-2"
-            title="Each node represents about 10 power outages"
+            title="Each Node Represents About 10 Power Outages"
             visualization={
               <Blob data={data} screenSize={[screenWidth, screenHeight]} />
             }
@@ -74,7 +74,7 @@ export default class App extends Component {
           <QuestionPage
             id="question-page-2"
             jumpTarget="#vis-page-2"
-            title="What are the most common causes?"
+            title="What are the Most Common Causes?"
             text="To answer this question we used an interactive pie chart 
             that filters the data based on year. Based on that year you can
             see what the most common causes on power outages in the United 
@@ -94,7 +94,7 @@ export default class App extends Component {
           <QuestionPage
             id="question-page-3"
             jumpTarget="#vis-page-3"
-            title="Where is it more common?"
+            title="Where is it More Common?"
             text="To answer this question we used a chloropleth map to show
             which states experience power outages more frequently.
             The darker the color of the state the more people were affected."
@@ -103,13 +103,16 @@ export default class App extends Component {
             id="vis-page-3"
             jumpTarget="#question-page-4"
             visualization={
-              <USAMap data={data} width={screenWidth} height={screenHeight} />
+              <div>
+                <h2 style={{ marginBottom: "-50px" }}>Number of Affected Customers per State</h2>
+                <USAMap data={data} width={screenWidth} height={screenHeight} />
+              </div>
             }
           />
           <QuestionPage
             id="question-page-4"
             jumpTarget="#vis-page-4"
-            title="When is it more impactful?"
+            title="When is it More Impactful?"
             text="Looking at the bar graph below we can conclude that the most common hours
             of the day when people experience power outages are between 3:00pm - 6:00pm"
           />
@@ -126,7 +129,7 @@ export default class App extends Component {
           <QuestionPage
             id="question-page-5"
             jumpTarget="#vis-page-5"
-            title="When is it more impactful?"
+            title="When is it More Impactful?"
             text="By looking at the line graph below we can answer when power outages are more impactful based on year.
             The years 2008, 2011, and 2012 had the highest incidences of power outages in the last 15 years of our data set range."
           />
